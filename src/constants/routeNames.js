@@ -3,6 +3,7 @@ export const REGISTER = 'Register';
 export const SETTINGS = 'Settings';
 export const USER_PROFILE = 'Profile';
 export const CREATE_USER = 'Create User';
+export const DRAWER_NAVIGATOR = 'Drawer';
 export const HOME_NAVIGATOR = 'Home';
 export const DASHBOARD = 'Dashboard';
 export const CREATE_APPOINTMENT = 'Create Appointment';

@@ -1,12 +1,12 @@
-import { Item, Label, Input, Icon } from "native-base";
 import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Button } from "react-native";
 import { Image } from "react-native-elements";
-import CyberBar from "../assets/images/CyberBar.png";
+import CyberBar from '../../assets/images/CyberBar.png';
+import { REGISTER } from "../../constants/routeNames";
 
 
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
     return (
         <ScrollView    
           style={{flex: 1, backgroundColor: '#ffffff'}}
@@ -21,10 +21,12 @@ const LoginScreen = () => {
                 <Text style={{color: 'blue', fontSize: 34}}>Welcome</Text>
                 <Text style={{ color: 'blue' }}>
                     Don't have an account?
-                    <Text style={{ color: 'red', fontStyle: 'italic' }}>
-                        {' '}
-                        Register Now
-                    </Text>
+                    <Button style={{ color: 'red', fontStyle: 'italic' }}
+                      title="Register Now"    
+                      onPress={() => {
+                        navigation.navigate(REGISTER)
+                      }}
+                    />
                 </Text>
                 <View style={{ marginTop: 50 }}>
                     
