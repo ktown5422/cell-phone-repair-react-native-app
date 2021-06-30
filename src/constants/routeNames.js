@@ -9,8 +9,9 @@ export const DASHBOARD = 'Dashboard';
 export const CREATE_APPOINTMENT = 'Create Appointment';
 export const APPOINTMENT_LIST = 'Booked Appointments ';
 export const CREATE_REPAIR_TICKET = 'Create Repair Ticket';
-export const REPAIR_TICKET_LIST = 'Repair Ticket List';
+export const REPAIR_TICKET_LIST = 'Repair Tickets';
 export const CREATE_INVOICE_SCREEN = 'Create Invoice';
-export const CREATE_INVENTORY_ITEM = 'Inventory';
+export const INVOICE_LIST = 'Invoices';
+export const CREATE_INVENTORY_ITEM = 'Create Inventory Item';
+export const INVENTORY_LIST = 'Inventory';
 export const ADD_NOTES = 'Create Notes';
-

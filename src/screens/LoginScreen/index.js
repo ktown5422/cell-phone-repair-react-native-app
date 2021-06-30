@@ -1,60 +1,49 @@
-import React from "react";
-import { StyleSheet, Text, View, ScrollView, Button } from "react-native";
-import { Image } from "react-native-elements";
-import CyberBar from '../../assets/images/CyberBar.png';
-import { REGISTER } from "../../constants/routeNames";
+import { useRoute } from '@react-navigation/native';
+import React, { useState, useContext, useEffect } from 'react';
+import LoginComponent from '../../components/Login/index';
+import { GlobalContext } from '../../context/Provider';
 
 
 
-const LoginScreen = ({ navigation }) => {
+
+const LoginScreen = () => {
+    const [form, setForm] = useState({});
+    const [justSignedUp, setJustSignedUp] = useState(false);
+    const {params} = useRoute();
+  
+    useEffect(() => {
+      if (params?.data) {
+        setJustSignedUp(true);
+        setForm({...form, userName: params.data.username});
+      }
+    }, [params]);
+  
+    const {
+      authDispatch,
+      authState: {error, loading},
+    } = useContext(GlobalContext);
+  
+    const onSubmit = () => {
+      if (form.userName && form.password) {
+        loginUser(form)(authDispatch);
+      }
+    };
+  
+    const onChange = ({name, value}) => {
+      setJustSignedUp(false);
+      setForm({...form, [name]: value});
+    };
+  
     return (
-        <ScrollView    
-          style={{flex: 1, backgroundColor: '#ffffff'}}
-          showsVerticalScrollIndicator={false}>
-            <View style={styles.brandView}>
-                <Image 
-                  source={CyberBar}
-                  style={{ width: 300, height: 100, display: 'flex' }}
-                />
-            </View>
-            <View style={styles.bottomView}>
-                <Text style={{color: 'blue', fontSize: 34}}>Welcome</Text>
-                <Text style={{ color: 'blue' }}>
-                    Don't have an account?
-                    <Button style={{ color: 'red', fontStyle: 'italic' }}
-                      title="Register Now"    
-                      onPress={() => {
-                        navigation.navigate(REGISTER)
-                      }}
-                    />
-                </Text>
-                <View style={{ marginTop: 50 }}>
-                    
-                </View>
-            </View>
-        </ScrollView>
+      <LoginComponent
+        onSubmit={onSubmit}
+        onChange={onChange}
+        form={form}
+        error={error}
+        loading={loading}
+        justSignedUp={justSignedUp}
+      />
     );
-};
-
-
-
-export default LoginScreen;
-
-
-const styles = StyleSheet.create({
-    brandView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 50,
-    },
-    bottomView: {
-        flex: 1,
-        marginTop: 100,
-        padding: 50,
-        
-        bottom: 50,
-        borderTopStartRadius: 60,
-        borderTopEndRadius: 60,
-    },
-});
+  };
+  
+  export default LoginScreen;

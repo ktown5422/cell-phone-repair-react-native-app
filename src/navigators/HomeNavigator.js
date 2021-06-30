@@ -8,17 +8,15 @@ import InventoryScreen from '../screens/InventoryScreen';
 import CreateAppointmentScreen from '../screens/AppointmentScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import DrawerNavigator from './DrawerNavigator';
+import TabNavigator from './TabNavigator';
 
+
+const HomeStack = createStackNavigator();
 
 const HomeNavigator = () => {
-    const HomeStack = createStackNavigator();
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator screenOptions={{ headerShown: false }} >
             <HomeStack.Screen name={DASHBOARD} component={DrawerNavigator}></HomeStack.Screen>
-            <HomeStack.Screen name={USER_PROFILE} component={UserProfileScreen}></HomeStack.Screen>
-            <HomeStack.Screen name={CREATE_INVENTORY_ITEM} component={InventoryScreen}></HomeStack.Screen>
-            <HomeStack.Screen name={CREATE_APPOINTMENT} component={CreateAppointmentScreen}></HomeStack.Screen>
-            <HomeStack.Screen name={SETTINGS} component={SettingsScreen}></HomeStack.Screen>
         </HomeStack.Navigator>
     );
 };
