@@ -1,12 +1,13 @@
-import {useNavigation} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
 import {useContext} from 'react';
-import {useState} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 import RegisterComponent from '../../components/Register/index';
 import {LOGIN} from '../../constants/routeNames'
-// import register, {clearAuthState} from '../../context/actions/auth/register';
+import registerAction, {clearAuthState} from '../../context/actions/registerAction';
 import {GlobalContext} from '../../context/Provider';
+import axiosInstance from '../../helpers/axiosHelper';
 
 const RegisterScreen = () => {
   const [form, setForm] = useState({});
@@ -16,6 +17,14 @@ const RegisterScreen = () => {
     authDispatch,
     authState: {error, loading, data},
   } = useContext(GlobalContext);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     navigate(LOGIN);
+  //   }
+  // }, [data]);
+
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -54,11 +63,6 @@ const RegisterScreen = () => {
   };
 
   const onSubmit = () => {
-    if (!form.userName) {
-      setErrors((prev) => {
-        return {...prev, userName: 'Please add a username'};
-      });
-    }
     if (!form.firstName) {
       setErrors((prev) => {
         return {...prev, firstName: 'Please add a  first name'};
@@ -80,15 +84,15 @@ const RegisterScreen = () => {
       });
     }
 
-    if (
-      Object.values(form).length === 5 &&
-      Object.values(form).every((item) => item.trim().length > 0) &&
-      Object.values(errors).every((item) => !item)
-    ) {
-      register(form)(authDispatch)((response) => {
-        navigate(LOGIN, {data: response});
-      });
-    }
+    // if (
+    //   Object.values(form).length === 5 &&
+    //   Object.values(form).every((item) => item.trim().length > 0) &&
+    //   Object.values(errors).every((item) => !item)
+    // ) {
+    //   registerAction(form)(authDispatch)((response) => {
+    //     navigate(LOGIN, {data: response});
+    //   });
+    // }
   };
 
   return (

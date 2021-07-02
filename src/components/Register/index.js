@@ -8,6 +8,7 @@ import FormInput from '../FormInput/index';
 import CyberBar from '../../assets/images/CyberBar.png';
 import { LOGIN } from '../../constants/routeNames';
 import styles from './styles';
+import Message from '../Message/index'
 
 
 
@@ -41,18 +42,9 @@ const RegisterComponent = ({
             {error?.error && (
               <Message retry danger retryFn={onSubmit} message={error?.error} />
             )}
-            <FormInput
-              label="Username"
-              iconPosition="right"
-              placeholder="Enter Username"
-              error={errors.userName || error?.username?.[0]}
-              onChangeText={(value) => {
-                onChange({name: 'userName', value});
-              }}
-            />
   
             <FormInput
-              label="First name"
+              label="First Name"
               iconPosition="right"
               placeholder="Enter First name"
               onChangeText={(value) => {
@@ -110,7 +102,7 @@ const RegisterComponent = ({
               <Text style={styles.infoText}>Already have an account?</Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigate(LOGIN);
+                  navigate.navigate(LOGIN);
                 }}>
                 <Text style={styles.linkBtn}>Login</Text>
               </TouchableOpacity>

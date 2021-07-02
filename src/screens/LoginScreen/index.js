@@ -2,7 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import React, { useState, useContext, useEffect } from 'react';
 import LoginComponent from '../../components/Login/index';
 import { GlobalContext } from '../../context/Provider';
-
+import loginAction from '../../context/actions/loginAction';
 
 
 
@@ -14,18 +14,15 @@ const LoginScreen = () => {
     useEffect(() => {
       if (params?.data) {
         setJustSignedUp(true);
-        setForm({...form, userName: params.data.username});
+        setForm({...form, email: params.data.email});
       }
     }, [params]);
   
-    const {
-      authDispatch,
-      authState: {error, loading},
-    } = useContext(GlobalContext);
+    const { authDispatch, authState:{error, loading} } = useContext(GlobalContext);
   
     const onSubmit = () => {
-      if (form.userName && form.password) {
-        loginUser(form)(authDispatch);
+      if (form.email && form.password) {
+        loginAction(form)(authDispatch);
       }
     };
   

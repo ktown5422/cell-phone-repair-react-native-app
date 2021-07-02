@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import HomeNavigator from './HomeNavigator';
 import Dashboard from '../screens/DashboardScreen/index';
-import { CREATE_INVENTORY_ITEM, DASHBOARD, USER_PROFILE, CREATE_APPOINTMENT, SETTINGS, APPOINTMENT_LIST, CREATE_REPAIR_TICKET, REPAIR_TICKET_LIST, CREATE_INVOICE_SCREEN, INVOICE_LIST } from '../constants/routeNames';
+import { LOGIN, DASHBOARD, USER_PROFILE, CREATE_APPOINTMENT, SETTINGS, APPOINTMENT_LIST, CREATE_REPAIR_TICKET, REPAIR_TICKET_LIST, CREATE_INVOICE_SCREEN, INVOICE_LIST } from '../constants/routeNames';
 import InventoryScreen from '../screens/InventoryScreen';
 import { View, Text, Image,TouchableOpacity, Button } from 'react-native';
 import authReducer from '../context/reducers/authReducer';
@@ -19,7 +21,6 @@ import getHeaderTitle from '../helpers/getHeaderTitle';
 const Drawer = createDrawerNavigator();
 
 const CustomDrawer = (props) => {
-
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
@@ -67,7 +68,7 @@ const DrawerNavigator = () => {
     return (
         <Drawer.Navigator 
             drawerContent={(props) => <CustomDrawer {...props} />}>
-            <Drawer.Screen name={DASHBOARD} component={TabNavigator} options={{ Screen: "Dashbord" }}></Drawer.Screen>
+            <Drawer.Screen name={DASHBOARD} component={TabNavigator}></Drawer.Screen>
             <Drawer.Screen name={CREATE_APPOINTMENT} component={CreateAppointmentScreen}></Drawer.Screen>
             <Drawer.Screen name={CREATE_REPAIR_TICKET} component={Splash}></Drawer.Screen>
             <Drawer.Screen name={CREATE_INVOICE_SCREEN} component={Splash}></Drawer.Screen>

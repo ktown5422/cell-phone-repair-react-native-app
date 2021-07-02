@@ -14,12 +14,12 @@ import CustomButton from '../CustomButton/index';
 
 const LoginComponent = ({
     error,
-    form,
-    justSignedUp,
+    justSignedUp, 
     onChange,
     loading,
     onSubmit,
   }) => {
+    const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [isSecureEntry, setIsSecureEntry] = useState(true);
     return (
@@ -54,12 +54,12 @@ const LoginComponent = ({
             {error?.error && <Message danger onDismiss message={error?.error} />}
   
             <FormInput
-              label="Username"
+              label="Email"
               iconPosition="right"
-              placeholder="Enter Username"
-              value={form.userName || null}
+              placeholder="Enter Email"
+              value={form.email || null}
               onChangeText={(value) => {
-                onChange({name: 'userName', value});
+                onChange({name: 'email', value});
               }}
             />
   

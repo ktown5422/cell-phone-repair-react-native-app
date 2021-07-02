@@ -9,7 +9,7 @@ import {
     REGISTER_SUCCESS,
   } from '../../constants/typeOfActions';
   
-  const authReducer = (state, {type, payload}) => {
+  const auth = (state, {type, payload}) => {
     switch (type) {
       case LOGIN_LOADING:
       case REGISTER_LOADING:
@@ -37,7 +37,7 @@ import {
         return {
           ...state,
           loading: false,
-          data: null,
+          data: payload,
           isLoggedIn: false,
         };
   
@@ -62,4 +62,4 @@ import {
     }
   };
   
-  export default authReducer;
+  export default auth;
