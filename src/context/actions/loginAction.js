@@ -26,7 +26,7 @@ export default ({ email: email, password }) =>  (dispatch) => {
     .catch((err) => {
         dispatch({
             type: LOGIN_FAIL,
-            payload: err.response ? err.response.data : {error: 'Somehing err'},
+            payload: err.response ? err.response.data : {error: 'Something is wrong'},
         });
     });
 };

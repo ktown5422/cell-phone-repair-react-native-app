@@ -1,8 +1,6 @@
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {useFocusEffect} from '@react-navigation/native';
-import React from 'react';
-import {useContext} from 'react';
-import {useState, useCallback, useEffect} from 'react';
+import React,{useContext, useState, useCallback, useEffect} from 'react';
 import RegisterComponent from '../../components/Register/index';
 import {LOGIN} from '../../constants/routeNames'
 import registerAction, {clearAuthState} from '../../context/actions/registerAction';
@@ -18,11 +16,11 @@ const RegisterScreen = () => {
     authState: {error, loading, data},
   } = useContext(GlobalContext);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     navigate(LOGIN);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      navigate(LOGIN);
+    }
+  }, [data]);
 
 
 
@@ -84,15 +82,15 @@ const RegisterScreen = () => {
       });
     }
 
-    // if (
-    //   Object.values(form).length === 5 &&
-    //   Object.values(form).every((item) => item.trim().length > 0) &&
-    //   Object.values(errors).every((item) => !item)
-    // ) {
-    //   registerAction(form)(authDispatch)((response) => {
-    //     navigate(LOGIN, {data: response});
-    //   });
-    // }
+    if (
+      Object.values(form).length === 5 &&
+      Object.values(form).every((item) => item.trim().length > 0) &&
+      Object.values(errors).every((item) => !item)
+    ) {
+      registerAction(form)(authDispatch)((response) => {
+        navigate(LOGIN, {data: response});
+      });
+    }
   };
 
   return (

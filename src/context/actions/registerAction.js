@@ -33,7 +33,7 @@ export default ({
     .catch((err) => {
         dispatch({
             type: REGISTER_FAIL,
-            payload: err.response ? err.response.data : {error: 'Somehing err'},
+            payload: err.response ? err.response.data : {error: 'Somehing is wrong'},
         });
     });
 };

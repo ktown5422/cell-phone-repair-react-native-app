@@ -4,7 +4,7 @@ import {Image, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Container from '../../components/Container/index';
 import CustomButton from '../CustomButton/index';
-import FormInput from '../FormInput/index';
+import Input from '../Input/index';
 import CyberBar from '../../assets/images/CyberBar.png';
 import { LOGIN } from '../../constants/routeNames';
 import styles from './styles';
@@ -28,8 +28,6 @@ const RegisterComponent = ({
     return (
       <Container>
         <Image
-          height={70}
-          width={70}
           source={CyberBar}
           style={styles.logoImage}
         />
@@ -43,7 +41,7 @@ const RegisterComponent = ({
               <Message retry danger retryFn={onSubmit} message={error?.error} />
             )}
   
-            <FormInput
+            <Input
               label="First Name"
               iconPosition="right"
               placeholder="Enter First name"
@@ -52,7 +50,7 @@ const RegisterComponent = ({
               }}
               error={errors.firstName || error?.first_name?.[0]}
             />
-            <FormInput
+            <Input
               label="Last Name"
               iconPosition="right"
               placeholder="Enter Last name"
@@ -61,7 +59,7 @@ const RegisterComponent = ({
                 onChange({name: 'lastName', value});
               }}
             />
-            <FormInput
+            <Input
               label="Email"
               iconPosition="right"
               placeholder="Enter Email"
@@ -71,7 +69,7 @@ const RegisterComponent = ({
               }}
             />
   
-            <FormInput
+            <Input
               label="Password"
               placeholder="Enter Password"
               secureTextEntry={isSecureEntry}
@@ -102,7 +100,7 @@ const RegisterComponent = ({
               <Text style={styles.infoText}>Already have an account?</Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigate.navigate(LOGIN);
+                  navigate(LOGIN);
                 }}>
                 <Text style={styles.linkBtn}>Login</Text>
               </TouchableOpacity>

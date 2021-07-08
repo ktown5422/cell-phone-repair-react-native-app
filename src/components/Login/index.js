@@ -1,14 +1,14 @@
-import React, {useState} from "react";
-import {useNavigation} from '@react-navigation/native';
-import { StyleSheet, Text, View, ScrollView, Button } from "react-native";
-import TouchableOpacity from 'react-native-gesture-handler';
-import { Image } from "react-native-elements";
+import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, ScrollView, Button } from "react-native";
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import CyberBar from '../../assets/images/CyberBar.png';
 import { REGISTER } from "../../constants/routeNames";
 import styles from './styles';
 import Container from '../Container/index';
-import FormInput from '../FormInput/index';
+import Input from '../Input/index';
 import CustomButton from '../CustomButton/index';
+import Message from '../Message/index'
 
 
 
@@ -23,19 +23,16 @@ const LoginComponent = ({
     const {navigate} = useNavigation();
     const [isSecureEntry, setIsSecureEntry] = useState(true);
     return (
-      <Container>
+      <Container style={{ backgroundColor: 'white'}}>
         <Image
-          height={70}
-          width={70}
           source={CyberBar}
           style={styles.logoImage}
         />
-  
-        <View>
-          <Text style={styles.title}>Welcome to </Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.title}>Welcome to Cyber Bar Help Desk</Text>
           <Text style={styles.subTitle}>Please login here</Text>
   
-          <View style={styles.form}>
+          <View style={{ flex: 1 }}> 
             {justSignedUp && (
               <Message
                 onDismiss={() => {}}
@@ -53,7 +50,7 @@ const LoginComponent = ({
   
             {error?.error && <Message danger onDismiss message={error?.error} />}
   
-            <FormInput
+            <Input
               label="Email"
               iconPosition="right"
               placeholder="Enter Email"
@@ -63,7 +60,7 @@ const LoginComponent = ({
               }}
             />
   
-            <FormInput
+            <Input
               label="Password"
               placeholder="Enter Password"
               secureTextEntry={isSecureEntry}
@@ -79,7 +76,7 @@ const LoginComponent = ({
               onChangeText={(value) => {
                 onChange({name: 'password', value});
               }}
-            />
+            /> 
   
             <CustomButton
               disabled={loading}

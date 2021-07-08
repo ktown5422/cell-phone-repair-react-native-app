@@ -6,31 +6,32 @@ import { GlobalContext } from '../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import Splash from '../screens/SplashScreen';
 
 
 const AppNavContainer = () => {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const { authState: {isLoggedIn} } = useContext(GlobalContext);
-  const [authLoaded, setAuthLoaded] = useState(false);
+  const [authLoaded, setAuthLoaded] = useState(true);
 
   
 
-  // const getUser = async () => {
-  //   try {
-  //     await AsyncStorage.getItem('user');
-  //     if (user) {
-  //       setAuthLoaded(true);
-  //       setAuthenticated(true);
-  //     } else {
-  //       setAuthLoaded(true);
-  //       setAuthenticated(false);
-  //     }
-  //   } catch(error) {}
-  // };
+  const getUser = async () => {
+    try {
+      await AsyncStorage.getItem('user');
+      if (user) {
+        setAuthLoaded(true);
+        setAuthenticated(true);
+      } else {
+        setAuthLoaded(true);
+        setAuthenticated(false);
+      }
+    } catch(error) {}
+  };
 
-  // useEffect(() => {
-  //   getUser();
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    getUser();
+  }, [isLoggedIn]);
 
   return (
   <>
@@ -39,7 +40,7 @@ const AppNavContainer = () => {
           {isAuthenticated ? <HomeNavigator /> : <AuthNavigator />}
         </NavigationContainer>
     ) : (
-      <ActivityIndicator />
+      <Splash />
     )}
   </>
   );

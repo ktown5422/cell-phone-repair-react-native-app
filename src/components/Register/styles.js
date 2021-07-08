@@ -3,10 +3,10 @@ import colors from '../../assets/theme/colors'
 
 export default StyleSheet.create({
   logoImage: {
-    height: 150,
-    width: 150,
+    maxHeight: 70,
+    maxWidth: 400,
     alignSelf: 'center',
-    marginTop: 50,
+    marginTop: 100,
   },
 
   title: {
