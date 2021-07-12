@@ -22,6 +22,9 @@ const LoginComponent = ({
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [isSecureEntry, setIsSecureEntry] = useState(true);
+
+  
+
     return (
       <Container style={{ backgroundColor: 'white'}}>
         <Image
@@ -72,6 +75,7 @@ const LoginComponent = ({
                   <Text>{isSecureEntry ? 'Show' : 'Hide'}</Text>
                 </TouchableOpacity>
               }
+              value={form.password || null}
               iconPosition="right"
               onChangeText={(value) => {
                 onChange({name: 'password', value});

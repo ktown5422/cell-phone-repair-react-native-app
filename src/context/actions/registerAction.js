@@ -11,8 +11,8 @@ export const clearAuthState = () => dispatch => {
 export default ({ 
     email, 
     password, 
-    firstName: first_name, 
-    lastName: last_name, 
+    first_name: first_name, 
+    last_name: last_name, 
 }) =>  (dispatch) => {
     dispatch({
         type: REGISTER_LOADING,

@@ -16,22 +16,22 @@ const AppNavContainer = () => {
 
   
 
-  const getUser = async () => {
-    try {
-      await AsyncStorage.getItem('user');
-      if (user) {
-        setAuthLoaded(true);
-        setAuthenticated(true);
-      } else {
-        setAuthLoaded(true);
-        setAuthenticated(false);
-      }
-    } catch(error) {}
-  };
+  // const getUser = async () => {
+  //   try {
+  //     await AsyncStorage.getItem('user');
+  //     if (user) {
+  //       setAuthLoaded(true);
+  //       setAuthenticated(true);
+  //     } else {
+  //       setAuthLoaded(true);
+  //       setAuthenticated(false);
+  //     }
+  //   } catch(error) {}
+  // };
 
-  useEffect(() => {
-    getUser();
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   getUser();
+  // }, [isLoggedIn]);
 
   return (
   <>

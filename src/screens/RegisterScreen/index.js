@@ -1,5 +1,6 @@
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {useFocusEffect} from '@react-navigation/native';
+import axios from 'axios';
 import React,{useContext, useState, useCallback, useEffect} from 'react';
 import RegisterComponent from '../../components/Register/index';
 import {LOGIN} from '../../constants/routeNames'
@@ -60,15 +61,23 @@ const RegisterScreen = () => {
     }
   };
 
+  const signup = async (form) => {
+    const response = await axios.post("http://localhost:3000/user/register", form);
+    
+    
+    return response;
+  }
+
   const onSubmit = () => {
-    if (!form.firstName) {
+    console.log(form)
+    if (!form.first_name) {
       setErrors((prev) => {
-        return {...prev, firstName: 'Please add a  first name'};
+        return {...prev, first_name: 'Please add a  first name'};
       });
     }
-    if (!form.lastName) {
+    if (!form.last_name) {
       setErrors((prev) => {
-        return {...prev, lastName: 'Please add a last name'};
+        return {...prev, last_name: 'Please add a last name'};
       });
     }
     if (!form.email) {
@@ -81,16 +90,18 @@ const RegisterScreen = () => {
         return {...prev, password: 'Please add a password'};
       });
     }
-
     if (
       Object.values(form).length === 5 &&
       Object.values(form).every((item) => item.trim().length > 0) &&
       Object.values(errors).every((item) => !item)
-    ) {
-      registerAction(form)(authDispatch)((response) => {
-        navigate(LOGIN, {data: response});
-      });
-    }
+    ) 
+    signup(form);
+    // console.log(form)
+    // {
+    //   registerAction(form)(authDispatch)((response) => {
+    //     navigate(LOGIN, {data: response});
+    //   });
+    // }
   };
 
   return (
