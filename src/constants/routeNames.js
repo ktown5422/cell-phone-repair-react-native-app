@@ -15,3 +15,4 @@ export const INVOICE_LIST = 'Invoices';
 export const CREATE_INVENTORY_ITEM = 'Create Inventory Item';
 export const INVENTORY_LIST = 'Inventory';
 export const ADD_NOTES = 'Create Notes';
+export const MENU = 'Menu';

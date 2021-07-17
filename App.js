@@ -1,18 +1,25 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import AuthNavigator from "./src/navigators/AuthNavigator.js";
+import { Provider } from "react-redux";
+import { createStore, combineReducers } from "redux";
+import appointmentsReducer from "./src/store/reducers/appointments";
+import HomeNavigator from "./src/navigators/HomeNavigator.js";
+import TabNavigator from "./src/navigators/TabNavigator.js";
 
-import { NavigationContainer } from '@react-navigation/native';
-import RootStackNavigator from './src/navigators/index.js';
-import Splash from './src/screens/SplashScreen';
-import { authReducer } from './src/context/reducers/authReducer';
-import GlobalProvider from './src/context/Provider';
-import AppNavContainer from './src/navigators/index';
+const rootReducer = combineReducers({
+  appointments: appointmentsReducer,
+});
 
+const store = createStore(rootReducer);
 
 const App = () => {
   return (
-    <GlobalProvider>
-      <AppNavContainer />
-    </GlobalProvider>
+    <Provider store={store}>
+      <NavigationContainer>
+        <TabNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
 

@@ -1,118 +1,146 @@
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {useFocusEffect} from '@react-navigation/native';
-import axios from 'axios';
-import React,{useContext, useState, useCallback, useEffect} from 'react';
-import RegisterComponent from '../../components/Register/index';
-import {LOGIN} from '../../constants/routeNames'
-import registerAction, {clearAuthState} from '../../context/actions/registerAction';
-import {GlobalContext} from '../../context/Provider';
-import axiosInstance from '../../helpers/axiosHelper';
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { LOGIN } from "../../constants/routeNames";
+import Container from "../../components/Container";
+import { Image, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import CustomButton from "../../components/CustomButton/index";
+import Input from "../../components/Input/index";
+import CyberBar from "../../assets/images/CyberBar.png";
+import styles from "./styles";
+import Message from "../../components/Message/index";
+import firebase from "firebase";
+import * as authActions from "../../store/actions/auth";
+import { useDispatch } from "react-redux";
+import { db, auth } from "../../firebase";
 
-const RegisterScreen = () => {
-  const [form, setForm] = useState({});
-  const {navigate} = useNavigation();
-  const [errors, setErrors] = useState({});
-  const {
-    authDispatch,
-    authState: {error, loading, data},
-  } = useContext(GlobalContext);
+const RegisterScreen = ({
+  props,
+  onSubmit,
+  onChange,
+  form,
+  loading,
+  error,
+  errors,
+}) => {
+  const { navigate } = useNavigation();
+  const [isSecureEntry, setIsSecureEntry] = useState(true);
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSignup, setIsSignup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (data) {
-      navigate(LOGIN);
-    }
-  }, [data]);
+  // const dispatch = useDispatch();
 
+  // const signUpHandler = () => {
+  //   let action;
+  //     action = authActions.signUp(
+  //       email,
+  //       password
+  //     );
+  //   }
+  //   setIsLoading(true);
+  //   try {
+  //     await dispatch(action);
+  //     props.navigation.navigate('HomeNavigator');
+  //   } catch (err) {
+  //     console.log(err);
+  //     setIsLoading(false);
+  //   }
+  // };
 
-
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        if (data || error) {
-          clearAuthState()(authDispatch);
-        }
-      };
-    }, [data, error]),
-  );
-
-  const onChange = ({name, value}) => {
-    setForm({...form, [name]: value});
-
-    if (value !== '') {
-      if (name === 'password') {
-        if (value.length < 6) {
-          setErrors((prev) => {
-            return {...prev, [name]: 'This field needs min 6 characters'};
-          });
-        } else {
-          setErrors((prev) => {
-            return {...prev, [name]: null};
-          });
-        }
-      } else {
-        setErrors((prev) => {
-          return {...prev, [name]: null};
-        });
-      }
-    } else {
-      setErrors((prev) => {
-        return {...prev, [name]: 'This field is required'};
-      });
-    }
-  };
-
-  const signup = async (form) => {
-    const response = await axios.post("http://localhost:3000/user/register", form);
-    
-    
-    return response;
-  }
-
-  const onSubmit = () => {
-    console.log(form)
-    if (!form.first_name) {
-      setErrors((prev) => {
-        return {...prev, first_name: 'Please add a  first name'};
-      });
-    }
-    if (!form.last_name) {
-      setErrors((prev) => {
-        return {...prev, last_name: 'Please add a last name'};
-      });
-    }
-    if (!form.email) {
-      setErrors((prev) => {
-        return {...prev, email: 'Please add a email'};
-      });
-    }
-    if (!form.password) {
-      setErrors((prev) => {
-        return {...prev, password: 'Please add a password'};
-      });
-    }
-    if (
-      Object.values(form).length === 5 &&
-      Object.values(form).every((item) => item.trim().length > 0) &&
-      Object.values(errors).every((item) => !item)
-    ) 
-    signup(form);
-    // console.log(form)
-    // {
-    //   registerAction(form)(authDispatch)((response) => {
-    //     navigate(LOGIN, {data: response});
-    //   });
-    // }
-  };
+  // const signUp = async() => {
+  //   try{
+  //     firebase.auth().createUserWithEmailAndPassword(email, password)
+  //   }catch(err){
+  //     console.log(err)
+  //   }
+  // }
 
   return (
-    <RegisterComponent
-      onSubmit={onSubmit}
-      onChange={onChange}
-      form={form}
-      errors={errors}
-      error={error}
-      loading={loading}
-    />
+    <Container>
+      <Image source={CyberBar} style={styles.logoImage} />
+
+      <View>
+        <Text style={styles.title}>Repair Shop Software</Text>
+        <Text style={styles.subTitle}>Create a free account</Text>
+
+        <View style={styles.form}>
+          {error?.error && (
+            <Message retry danger retryFn={onSubmit} message={error?.error} />
+          )}
+
+          <Input
+            label="Name"
+            iconPosition="right"
+            placeholder="Enter Name"
+            value={displayName}
+            onChangeText={setDisplayName}
+          />
+          <Input
+            label="Email"
+            iconPosition="right"
+            placeholder="Enter Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+
+          <Input
+            label="Password"
+            placeholder="Enter Password"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry((prev) => !prev);
+                }}
+              >
+                <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
+              </TouchableOpacity>
+            }
+            iconPosition="right"
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <Input
+            label="Password Confirmation"
+            placeholder="Enter Password"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry((prev) => !prev);
+                }}
+              >
+                <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
+              </TouchableOpacity>
+            }
+            iconPosition="right"
+          />
+
+          <CustomButton
+            loading={loading}
+            onPress={() => signUpHandler}
+            disabled={loading}
+            primary
+            title="Submit"
+          />
+
+          <View style={styles.createSection}>
+            <Text style={styles.infoText}>Already have an account?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(LOGIN);
+              }}
+            >
+              <Text style={styles.linkBtn}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Container>
   );
 };
 

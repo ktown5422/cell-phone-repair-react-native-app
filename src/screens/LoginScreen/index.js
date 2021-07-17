@@ -1,46 +1,94 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useState, useContext, useEffect } from 'react';
-import LoginComponent from '../../components/Login/index';
-import { GlobalContext } from '../../context/Provider';
-import loginAction from '../../context/actions/loginAction';
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Text, View, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import CyberBar from "../../assets/images/CyberBar.png";
+import { DASHBOARD, REGISTER } from "../../constants/routeNames";
+import styles from "./styles";
+import Container from "../../components/Container/index";
+import Input from "../../components/Input/index";
+import CustomButton from "../../components/CustomButton";
+import Message from "../../components/Message/index";
+import firebase from "firebase";
+import * as authActions from "../../store/actions/auth";
+import { useDispatch } from "react-redux";
 
+const LoginScreen = ({ onSubmit, loading, error }) => {
+  const { navigate } = useNavigation();
+  const [isSecureEntry, setIsSecureEntry] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  // const signIn = async() => {
+  //   try{
+  //     firebase.auth().signInWithEmailAndPassword(email, password)
+  //     navigate(DASHBOARD)
+  //   }catch(err){
+  //     console.log(err)
+  //   }
+  // }
 
-const LoginScreen = () => {
-    const [form, setForm] = useState({});
-    const [justSignedUp, setJustSignedUp] = useState(false);
-    const {params} = useRoute();
-  
-    useEffect(() => {
-      if (params?.data) {
-        setJustSignedUp(true);
-        setForm({...form, email: params.data.email});
-      }
-    }, [params]);
-  
-    const { authDispatch, authState:{error, loading} } = useContext(GlobalContext);
-  
-    const onSubmit = () => {
-      if (form.email && form.password) {
-        loginAction(form)(authDispatch);
-      }
-    };
-  
-    const onChange = ({name, value}) => {
-      setJustSignedUp(false);
-      setForm({...form, [name]: value});
-    };
-  
-    return (
-      <LoginComponent
-        onSubmit={onSubmit}
-        onChange={onChange}
-        form={form}
-        error={error}
-        loading={loading}
-        justSignedUp={justSignedUp}
-      />
-    );
-  };
-  
-  export default LoginScreen;
+  return (
+    <Container>
+      <Image source={CyberBar} style={styles.logoImage} />
+
+      <View>
+        <Text style={styles.title}>Repair Shop Software</Text>
+        <Text style={styles.subTitle}>Login</Text>
+
+        <View style={styles.form}>
+          {error?.error && (
+            <Message retry danger retryFn={onSubmit} message={error?.error} />
+          )}
+
+          <Input
+            label="Email"
+            iconPosition="right"
+            placeholder="Enter Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+
+          <Input
+            label="Password"
+            placeholder="Enter Password"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry((prev) => !prev);
+                }}
+              >
+                <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
+              </TouchableOpacity>
+            }
+            iconPosition="right"
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <CustomButton
+            loading={loading}
+            onPress={() => login()}
+            disabled={loading}
+            primary
+            title="Submit"
+          />
+
+          <View style={styles.createSection}>
+            <Text style={styles.infoText}>Already have an account?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(REGISTER);
+              }}
+            >
+              <Text style={styles.linkBtn}>Register</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Container>
+  );
+};
+
+export default LoginScreen;
