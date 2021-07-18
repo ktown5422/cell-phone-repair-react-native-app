@@ -6,6 +6,8 @@ import { createStore, combineReducers } from "redux";
 import appointmentsReducer from "./src/store/reducers/appointments";
 import HomeNavigator from "./src/navigators/HomeNavigator.js";
 import TabNavigator from "./src/navigators/TabNavigator.js";
+import AppointmentListingScreen from "./src/screens/AppointmentDetailScreen/index.js";
+import MessagesScreen from "./src/screens/MessagesScreen/index.js";
 
 const rootReducer = combineReducers({
   appointments: appointmentsReducer,
@@ -17,7 +19,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <TabNavigator />
+        <MessagesScreen />
       </NavigationContainer>
     </Provider>
   );

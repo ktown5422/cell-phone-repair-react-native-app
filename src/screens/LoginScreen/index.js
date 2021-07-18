@@ -76,7 +76,7 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
           />
 
           <View style={styles.createSection}>
-            <Text style={styles.infoText}>Already have an account?</Text>
+            <Text style={styles.infoText}>Don't have an account?</Text>
             <TouchableOpacity
               onPress={() => {
                 navigate(REGISTER);
