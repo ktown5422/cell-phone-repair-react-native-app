@@ -1,16 +1,12 @@
-import React from "react";
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-} from "react-native";
-import ImageItem from "../../components/ImageItem";
-import HatPic from "../../assets/images/HatPic.jpg";
+import React, { useState } from "react";
+import { View } from "react-native";
+import { FlatList } from "react-native";
+import ListItem from "../../components/ListItem";
+import ListItemDeleteAction from "../../components/ListItemDeleteAction";
+import ListItemSeparator from "../../components/ListItemSeparator";
+import Screen from "../../components/Screen";
 
-const DATA = [
+const initialMessages = [
   {
     id: 1,
     title: "First Item",
@@ -31,23 +27,49 @@ const DATA = [
   },
 ];
 
-const Item = ({ title, subTitle, image }) => (
-  <ImageItem title={title} subTitle={subTitle} image={image} />
+const Item = ({ title, subTitle, image, onPress, renderRightActions }) => (
+  <ListItem
+    title={title}
+    subTitle={subTitle}
+    image={image}
+    onPress={onPress}
+    renderRightActions={renderRightActions}
+  />
 );
 
 const MessagesScreen = () => {
+  const [messages, setMessages] = useState(initialMessages);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleDelete = (message) => {
+    const newMessages = messages.filter((m) => m.id !== message.id);
+    setMessages(newMessages);
+  };
   const renderItem = ({ item }) => (
-    <Item title={item.title} subTitle={item.subTitle} image={item.image} />
+    <Item
+      title={item.title}
+      subTitle={item.subTitle}
+      image={item.image}
+      onPress={() => console.log("Selected", item)}
+      renderRightActions={() => (
+        <ListItemDeleteAction onPress={() => handleDelete(item)} />
+      )}
+    />
   );
 
   return (
-    <SafeAreaView>
+    <Screen>
       <FlatList
-        data={DATA}
+        data={messages}
+        keyExtractor={(message) => message.id.toString()}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={ListItemSeparator}
+        refreshing={refreshing}
+        onRefresh={() => {
+          setMessages(initialMessages);
+        }}
       />
-    </SafeAreaView>
+    </Screen>
   );
 };
 

@@ -3,21 +3,21 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CyberBar from "../../assets/images/CyberBar.png";
-import { DASHBOARD, REGISTER } from "../../constants/routeNames";
+import { REGISTER } from "../../constants/routeNames";
 import styles from "./styles";
 import Container from "../../components/Container/index";
 import Input from "../../components/Input/index";
 import CustomButton from "../../components/CustomButton";
 import Message from "../../components/Message/index";
-import firebase from "firebase";
-import * as authActions from "../../store/actions/auth";
-import { useDispatch } from "react-redux";
+import AuthContext from "../../context/Provider";
 
 const LoginScreen = ({ onSubmit, loading, error }) => {
   const { navigate } = useNavigation();
   const [isSecureEntry, setIsSecureEntry] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { signIn } = React.useContext(AuthContext);
 
   // const signIn = async() => {
   //   try{
@@ -45,6 +45,7 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
             label="Email"
             iconPosition="right"
             placeholder="Enter Email"
+            autoCapitalize="none"
             value={email}
             onChangeText={setEmail}
           />
@@ -53,6 +54,7 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
             label="Password"
             placeholder="Enter Password"
             secureTextEntry={isSecureEntry}
+            autoCapitalize="none"
             icon={
               <TouchableOpacity
                 onPress={() => {
@@ -69,7 +71,7 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
 
           <CustomButton
             loading={loading}
-            onPress={() => login()}
+            onPress={() => signIn({ email, password })}
             disabled={loading}
             primary
             title="Submit"

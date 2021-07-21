@@ -1,17 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native";
-import { Text, View, Button } from "react-native";
+import { View, Button } from "react-native";
 import Card from "../../components/Card";
-import {
-  CREATE_INVENTORY_ITEM,
-  INVENTORY_LIST,
-} from "../../constants/routeNames";
-import authReducer from "../../context/reducers/authReducer";
-import colors from "../../assets/theme/colors";
+import { INVENTORY_LIST } from "../../constants/routeNames";
 
 const Dashboard = ({ navigation, route }) => {
-  // const { signOut } = useContext(authReducer);
   return (
     <ScrollView>
       <SafeAreaView>

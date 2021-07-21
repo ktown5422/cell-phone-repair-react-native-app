@@ -9,10 +9,7 @@ import Input from "../../components/Input/index";
 import CyberBar from "../../assets/images/CyberBar.png";
 import styles from "./styles";
 import Message from "../../components/Message/index";
-import firebase from "firebase";
-import * as authActions from "../../store/actions/auth";
-import { useDispatch } from "react-redux";
-import { db, auth } from "../../firebase";
+import AuthContext from "../../context/Provider";
 
 const RegisterScreen = ({
   props,
@@ -25,30 +22,14 @@ const RegisterScreen = ({
 }) => {
   const { navigate } = useNavigation();
   const [isSecureEntry, setIsSecureEntry] = useState(true);
-  const [displayName, setDisplayName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignup, setIsSignup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const dispatch = useDispatch();
-
-  // const signUpHandler = () => {
-  //   let action;
-  //     action = authActions.signUp(
-  //       email,
-  //       password
-  //     );
-  //   }
-  //   setIsLoading(true);
-  //   try {
-  //     await dispatch(action);
-  //     props.navigation.navigate('HomeNavigator');
-  //   } catch (err) {
-  //     console.log(err);
-  //     setIsLoading(false);
-  //   }
-  // };
+  const { signUp } = React.useContext(AuthContext);
 
   // const signUp = async() => {
   //   try{
@@ -72,17 +53,28 @@ const RegisterScreen = ({
           )}
 
           <Input
-            label="Name"
+            label="First Name"
             iconPosition="right"
-            placeholder="Enter Name"
-            value={displayName}
-            onChangeText={setDisplayName}
+            placeholder="First Name"
+            value={first_name}
+            autoCapitalize="none"
+            onChangeText={setFirstName}
           />
+          <Input
+            label="Last Name"
+            iconPosition="right"
+            placeholder="Last Name"
+            value={last_name}
+            autoCapitalize="none"
+            onChangeText={setLastName}
+          />
+
           <Input
             label="Email"
             iconPosition="right"
             placeholder="Enter Email"
             value={email}
+            autoCapitalize="none"
             onChangeText={setEmail}
           />
 
@@ -90,6 +82,7 @@ const RegisterScreen = ({
             label="Password"
             placeholder="Enter Password"
             secureTextEntry={isSecureEntry}
+            autoCapitalize="none"
             icon={
               <TouchableOpacity
                 onPress={() => {
@@ -107,6 +100,7 @@ const RegisterScreen = ({
           <Input
             label="Password Confirmation"
             placeholder="Enter Password"
+            autoCapitalize="none"
             secureTextEntry={isSecureEntry}
             icon={
               <TouchableOpacity
@@ -122,7 +116,7 @@ const RegisterScreen = ({
 
           <CustomButton
             loading={loading}
-            onPress={() => signUpHandler}
+            onPress={() => signUp({ first_name, last_name, email, password })}
             disabled={loading}
             primary
             title="Submit"

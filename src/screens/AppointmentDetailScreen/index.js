@@ -3,7 +3,6 @@ import { Image, View, StyleSheet } from "react-native";
 import colors from "../../assets/theme/colors";
 import HatPic from "../../assets/images/HatPic.jpg";
 import AppText from "../../components/AppText/index";
-import ImageItem from "../../components/ImageItem";
 
 function AppointmentListingScreen(props) {
   return (
@@ -13,7 +12,7 @@ function AppointmentListingScreen(props) {
         <AppText style={styles.title}>Appointment with Kevin T.</AppText>
         <AppText style={styles.price}>$100</AppText>
         <View style={styles.userContainer}>
-          <ImageItem image={HatPic} title="Kevin" subTitle="test@yahoo.com" />
+          <ListItem image={HatPic} title="Kevin" subTitle="test@yahoo.com" />
         </View>
       </View>
     </View>
