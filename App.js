@@ -8,6 +8,7 @@ import MessagesScreen from "./src/screens/MessagesScreen/index";
 import Screen from "./src/components/Screen.js";
 import Icon from "./src/components/Icon.js";
 import ListItem from "./src/components/ListItem.js";
+import MenuScreen from "./src/screens/MenuScreen/index.js";
 
 const App = ({ navigation }) => {
   const [state, dispatch] = React.useReducer(
@@ -138,16 +139,7 @@ const App = ({ navigation }) => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {state.userToken == null ? (
-          <AuthNavigator />
-        ) : (
-          <Screen>
-            <ListItem
-              title="my tittle"
-              ImageComponent={<Icon name="email" />}
-            />
-          </Screen>
-        )}
+        {state.userToken == null ? <AuthNavigator /> : <TabNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

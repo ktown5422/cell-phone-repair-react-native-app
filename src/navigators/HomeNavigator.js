@@ -99,7 +99,7 @@ const Stack = createStackNavigator();
 function HomeNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={DASHBOARD} component={DrawerNavigator} />
+      <Stack.Screen name={DASHBOARD} component={Dashboard} />
       <Stack.Screen
         name={APPOINTMENT_LIST}
         component={BookedAppointmentsScreen}
