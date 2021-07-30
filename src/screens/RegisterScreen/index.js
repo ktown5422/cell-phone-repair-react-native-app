@@ -48,13 +48,10 @@ const RegisterScreen = ({
         <Text style={styles.subTitle}>Create a free account</Text>
 
         <View style={styles.form}>
-          {error?.error && (
-            <Message retry danger retryFn={onSubmit} message={error?.error} />
-          )}
 
           <Input
             label="First Name"
-            iconPosition="right"
+            icon="account"
             placeholder="First Name"
             value={first_name}
             autoCapitalize="none"
@@ -62,7 +59,7 @@ const RegisterScreen = ({
           />
           <Input
             label="Last Name"
-            iconPosition="right"
+            icon="account"
             placeholder="Last Name"
             value={last_name}
             autoCapitalize="none"
@@ -71,7 +68,7 @@ const RegisterScreen = ({
 
           <Input
             label="Email"
-            iconPosition="right"
+            icon="email"
             placeholder="Enter Email"
             value={email}
             autoCapitalize="none"
@@ -80,38 +77,20 @@ const RegisterScreen = ({
 
           <Input
             label="Password"
+            icon="lock"
             placeholder="Enter Password"
             secureTextEntry={isSecureEntry}
             autoCapitalize="none"
-            icon={
-              <TouchableOpacity
-                onPress={() => {
-                  setIsSecureEntry((prev) => !prev);
-                }}
-              >
-                <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
-              </TouchableOpacity>
-            }
-            iconPosition="right"
             value={password}
             onChangeText={setPassword}
           />
 
           <Input
             label="Password Confirmation"
-            placeholder="Enter Password"
+            icon="lock-check"
+            placeholder="Password Confirmation"
             autoCapitalize="none"
             secureTextEntry={isSecureEntry}
-            icon={
-              <TouchableOpacity
-                onPress={() => {
-                  setIsSecureEntry((prev) => !prev);
-                }}
-              >
-                <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
-              </TouchableOpacity>
-            }
-            iconPosition="right"
           />
 
           <CustomButton

@@ -18,16 +18,7 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
   const [password, setPassword] = useState("");
 
   const { signIn } = React.useContext(AuthContext);
-
-  // const signIn = async() => {
-  //   try{
-  //     firebase.auth().signInWithEmailAndPassword(email, password)
-  //     navigate(DASHBOARD)
-  //   }catch(err){
-  //     console.log(err)
-  //   }
-  // }
-
+  
   return (
     <Container>
       <Image source={CyberBar} style={styles.logoImage} />
@@ -37,13 +28,10 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
         <Text style={styles.subTitle}>Login</Text>
 
         <View style={styles.form}>
-          {error?.error && (
-            <Message retry danger retryFn={onSubmit} message={error?.error} />
-          )}
 
           <Input
             label="Email"
-            iconPosition="right"
+            icon="email"
             placeholder="Enter Email"
             autoCapitalize="none"
             value={email}
@@ -52,19 +40,10 @@ const LoginScreen = ({ onSubmit, loading, error }) => {
 
           <Input
             label="Password"
+            icon="lock"
             placeholder="Enter Password"
             secureTextEntry={isSecureEntry}
             autoCapitalize="none"
-            icon={
-              <TouchableOpacity
-                onPress={() => {
-                  setIsSecureEntry((prev) => !prev);
-                }}
-              >
-                <Text>{isSecureEntry ? "Show" : "Hide"}</Text>
-              </TouchableOpacity>
-            }
-            iconPosition="right"
             value={password}
             onChangeText={setPassword}
           />

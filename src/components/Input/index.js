@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import colors from '../../assets/theme/colors';
-import styles from './styles';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 
 const Input = ({
     onChangeText,
@@ -13,58 +14,37 @@ const Input = ({
     error,
     ...props
   }) => {
-    const [focused, setFocused] = React.useState(false);
-  
-    const getFlexDirection = () => {
-      if (icon && iconPosition) {
-        if (iconPosition === 'left') {
-          return 'row';
-        } else if (iconPosition === 'right') {
-          return 'row-reverse';
-        }
-      }
-    };
-  
-    const getBorderColor = () => {
-      if (error) {
-        return colors.danger;
-      }
-  
-      if (focused) {
-        return colors.primary;
-      } else {
-        return colors.grey;
-      }
-    };
+     
     return (
-      <View style={styles.inputContainer}>
-        {label && <Text>{label}</Text>}
-  
-        <View
-          style={[
-            styles.wrapper,
-            {alignItems: icon ? 'center' : 'baseline'},
-            {borderColor: getBorderColor(), flexDirection: getFlexDirection()},
-          ]}>
-          <View>{icon && icon}</View>
-  
+      <View style={styles.container}>
+        {icon && <MaterialCommunityIcons name={icon} size={20} color={colors.darkgrey} style={styles.icon} />}
           <TextInput
-            style={[styles.textInput, style]}
+            style={styles.textInput}
             onChangeText={onChangeText}
             value={value}
-            onFocus={() => {
-              setFocused(true);
-            }}
-            onBlur={() => {
-              setFocused(false);
-            }}
             {...props}
           />
-        </View>
-  
-        {error && <Text style={styles.error}>{error}</Text>}
       </View>
     );
   };
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.lightgrey,
+      borderRadius: 25,
+      flexDirection: "row",
+      width: '100%',
+      padding: 15,
+      marginVertical: 10
+    },
+    icon: {
+      marginRight: 10,
+    },
+    textInput: {
+      fontSize: 18,
+      width: "100%",
+      fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    }
+  })
   
   export default Input;

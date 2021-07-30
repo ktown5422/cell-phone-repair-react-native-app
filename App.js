@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./src/navigators/AuthNavigator.js";
 import TabNavigator from "./src/navigators/TabNavigator.js";
@@ -9,6 +9,7 @@ import Screen from "./src/components/Screen.js";
 import Icon from "./src/components/Icon.js";
 import ListItem from "./src/components/ListItem.js";
 import MenuScreen from "./src/screens/MenuScreen/index.js";
+import AppPicker from "./src/components/AppPicker.js";
 
 const App = ({ navigation }) => {
   const [state, dispatch] = React.useReducer(
@@ -78,7 +79,7 @@ const App = ({ navigation }) => {
 
         if (!response.ok) {
           const errorResData = await response.json();
-          const errorId = errorResData.error.message;
+          const errorId = errorResData.message;
           let message = "Something went wrong!";
           if (errorId === "EMAIL_NOT_FOUND") {
             message = "This email could not be found!";
@@ -136,10 +137,17 @@ const App = ({ navigation }) => {
     []
   );
 
+  const categories = [
+    {label: "Furniture", value: 1 },
+    {label: "Clothing", value: 2 },
+    {label: "Cameras", value: 3 },
+  ];
+
+  const [category, setCategory] = useState();
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {state.userToken == null ? <AuthNavigator /> : <TabNavigator />}
+        {state.userToken == null ? <AppPicker selectedItem={category} onSelectItem={(item) => setCategory(item)} items={categories} icon="apps" placeholder="Category" /> : <TabNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );
