@@ -10,51 +10,76 @@ import Input from "../../components/Input/index";
 import CustomButton from "../../components/CustomButton";
 import Message from "../../components/Message/index";
 import AuthContext from "../../context/Provider";
+import AppText from "../../components/AppText";
+import { Formik } from "formik";
+import * as Yup from 'yup';
+import ErrorMessage from "../../components/ErrorMessage";
 
-const LoginScreen = ({ onSubmit, loading, error }) => {
+const LoginScreen = ({ onSubmit, loading }) => {
   const { navigate } = useNavigation();
-  const [isSecureEntry, setIsSecureEntry] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
   const { signIn } = React.useContext(AuthContext);
-  
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(4).label("Password")
+  });
+
   return (
     <Container>
       <Image source={CyberBar} style={styles.logoImage} />
 
       <View>
-        <Text style={styles.title}>Repair Shop Software</Text>
-        <Text style={styles.subTitle}>Login</Text>
+        <AppText style={styles.title}>Repair Shop Software</AppText>
+        <AppText style={styles.subTitle}>Login</AppText>
 
         <View style={styles.form}>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            onSubmit={(values) => signIn(values)}
+            validationSchema={validationSchema}
+          >
+            {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+              <>
+                <Input
+                  label="Email"
+                  icon="email"
+                  placeholder="Enter Email"
+                  autoCapitalize="none"
+                  onBlur={() => setFieldTouched("email")}
+                  autoCorrect={false}
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                  // value={email}
+                  onChangeText={handleChange("email")}
+                />
+                <ErrorMessage error={errors.email} visible={touched.email} />
+                <Input
+                  label="Password"
+                  icon="lock"
+                  placeholder="Enter Password"
+                  secureTextEntry
+                  onBlur={() => setFieldTouched("password")}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  textContentType="password"
+                  // value={password}
+                  onChangeText={handleChange("password")}
+                />
+                <ErrorMessage error={errors.password} visible={touched.password} />
+                <CustomButton
+                  loading={loading}
+                  onPress={handleSubmit}
+                  disabled={loading}
+                  primary
+                  title="Login"
+                />
+              </>
+            )}
 
-          <Input
-            label="Email"
-            icon="email"
-            placeholder="Enter Email"
-            autoCapitalize="none"
-            value={email}
-            onChangeText={setEmail}
-          />
-
-          <Input
-            label="Password"
-            icon="lock"
-            placeholder="Enter Password"
-            secureTextEntry={isSecureEntry}
-            autoCapitalize="none"
-            value={password}
-            onChangeText={setPassword}
-          />
-
-          <CustomButton
-            loading={loading}
-            onPress={() => signIn({ email, password })}
-            disabled={loading}
-            primary
-            title="Submit"
-          />
+          </Formik>
 
           <View style={styles.createSection}>
             <Text style={styles.infoText}>Don't have an account?</Text>

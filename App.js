@@ -10,6 +10,8 @@ import Icon from "./src/components/Icon.js";
 import ListItem from "./src/components/ListItem.js";
 import MenuScreen from "./src/screens/MenuScreen/index.js";
 import AppPicker from "./src/components/AppPicker.js";
+import AppointmentEditScreen from "./src/screens/AppointmentEditScreen/index.js";
+
 
 const App = ({ navigation }) => {
   const [state, dispatch] = React.useReducer(
@@ -137,17 +139,11 @@ const App = ({ navigation }) => {
     []
   );
 
-  const categories = [
-    {label: "Furniture", value: 1 },
-    {label: "Clothing", value: 2 },
-    {label: "Cameras", value: 3 },
-  ];
 
-  const [category, setCategory] = useState();
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {state.userToken == null ? <AppPicker selectedItem={category} onSelectItem={(item) => setCategory(item)} items={categories} icon="apps" placeholder="Category" /> : <TabNavigator />}
+        {state.userToken == null ? <AppointmentEditScreen /> : <TabNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );
