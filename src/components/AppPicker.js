@@ -11,7 +11,7 @@ import { FlatList } from 'react-native';
 import PickerItem from './PickerItem';
 
 
-const AppPicker = ({ icon, items, name, onSelectItem, placeholder, selectedItem, PickerItemComponent = PickerItem, }) => {
+const AppPicker = ({ icon, items, numberOfColumns, name, onSelectItem, placeholder, selectedItem, PickerItemComponent = PickerItem, }) => {
     const [modalVisable, setModalVisable] = useState(false);
     return (
         <>
@@ -28,8 +28,10 @@ const AppPicker = ({ icon, items, name, onSelectItem, placeholder, selectedItem,
                     <FlatList
                         data={items}
                         keyExtractor={item => item.value.toString()}
+                        numColumns={numberOfColumns}
                         renderItem={({ item }) => (
                             <PickerItemComponent
+                                item={item}
                                 label={item.label}
                                 onPress={() => {
                                     setModalVisable(false);
