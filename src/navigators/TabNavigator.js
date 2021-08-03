@@ -7,12 +7,17 @@ import {
   INVENTORY_LIST,
   USER_PROFILE,
   INVOICE_LIST,
+  CREATE_APPOINTMENT,
+  APPOINTMENTS,
 } from "../constants/routeNames";
 import InventoryScreen from "../screens/InventoryScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import HomeNavigator from "./HomeNavigator";
 import MenuNavigator from "./MenuNavigator";
 import InvoiceListScreen from "../screens/InvoiceListScreen";
+import AppointmentNavigator from "./AppointmentNavigator";
+import AppointmentEditScreen from "../screens/AppointmentEditScreen";
+import NewAppointmentButton from "./NewAppointmentButton";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -20,8 +25,8 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator activeColor="white" barStyle={{ backgroundColor: "blue" }}>
       <Tab.Screen
-        name={DASHBOARD}
-        component={HomeNavigator}
+        name={APPOINTMENTS}
+        component={AppointmentNavigator}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
@@ -40,6 +45,16 @@ const TabNavigator = () => {
               color={color}
               size={26}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={CREATE_APPOINTMENT}
+        component={AppointmentEditScreen}
+        options={{
+          tabBarLabel: null,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="plus-circle" color={color} size={26} />
           ),
         }}
       />

@@ -22,6 +22,7 @@ const validationSchema = Yup.object().shape({
     price: Yup.number().required().min(1).max(10000).label("Price"),
     description: Yup.string().label("Diagnostic Notes"),
     phoneType: Yup.object().required().nullable().label("Phone Type"),
+    images: Yup.array().min(1, "Please select at least one Image")
 });
 
 const phoneTypes = [
@@ -60,33 +61,11 @@ function AppointmentEditScreen() {
         setMode(currentMode)
     }
 
-    const requestPermission = async () => {
-        const result = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (!result.granted)
-            alert('You need to enable permission to access the library');
-    }
-
-    useEffect(() => {
-        requestPermission();
-    }, [])
-
-
-
-    const selectImage = async () => {
-        try {
-            const result = await ImagePicker.launchImageLibraryAsync();
-            if (!result.cancelled)
-                setImageUri(result.uri);
-        } catch (error) {
-            console.log('Error reading an image', error);
-        }
-    }
-
     return (
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ name: "", price: "", description: "", phoneType: null }}
+                    initialValues={{ name: "", price: "", description: "", phoneType: null, images: [] }}
                     onSubmit={(values) => console.log(values)}
                     validationSchema={validationSchema}
                 >

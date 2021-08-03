@@ -7,6 +7,7 @@ import colors from "../../assets/theme/colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "../../components/Icon";
 import ListItemSeparator from "../../components/ListItemSeparator";
+import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS } from "../../constants/routeNames";
 
 const menuItems = [
   {
@@ -15,13 +16,15 @@ const menuItems = [
       name: "account-circle",
       backgroundColor: colors.accent,
     },
+    targetScreen: USER_PROFILE
   },
   {
-    title: "Create Appointment",
+    title: "Messages",
     icon: {
       name: "calendar-month",
       backgroundColor: colors.danger,
     },
+    targetScreen: MESSAGES
   },
   {
     title: "Create Invoice",
@@ -29,6 +32,7 @@ const menuItems = [
       name: "receipt",
       backgroundColor: colors.secondary,
     },
+    targetScreen: INVOICE_LIST
   },
   {
     title: "Create Inventory Item",
@@ -36,6 +40,7 @@ const menuItems = [
       name: "playlist-plus",
       backgroundColor: colors.secondary,
     },
+    targetScreen: INVENTORY_LIST
   },
   {
     title: "Settings",
@@ -43,10 +48,11 @@ const menuItems = [
       name: "account-cog",
       backgroundColor: colors.accent,
     },
+    targetScreen: SETTINGS
   },
 ];
 
-function MenuScreen() {
+function MenuScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.container}>
@@ -70,12 +76,14 @@ function MenuScreen() {
                   backgroundColor={item.icon.backgroundColor}
                 />
               }
+              onPress={() => navigation.navigate(item.targetScreen)}
             />
           )}
         />
       </View>
       <ListItem
         title="Log Out"
+        onPress={() => (state.userToken == null)}
         ImageComponent={<Icon name="logout" backgroundColor={colors.danger} />}
       />
     </Screen>

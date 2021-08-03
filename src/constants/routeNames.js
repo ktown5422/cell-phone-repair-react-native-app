@@ -7,7 +7,9 @@ export const DRAWER_NAVIGATOR = "Drawer";
 export const HOME_NAVIGATOR = "Home";
 export const DASHBOARD = "Dashboard";
 export const CREATE_APPOINTMENT = "Create Appointment";
+export const APPOINTMENTS = "Appointments";
 export const APPOINTMENT_LIST = "Booked Appointments ";
+export const APPOINTMENT_DETAILS = "Appointment Details";
 export const CREATE_REPAIR_TICKET = "Create Repair Ticket";
 export const REPAIR_TICKET_LIST = "Repair Tickets";
 export const CREATE_INVOICE_SCREEN = "Create Invoice";
@@ -16,4 +18,7 @@ export const CREATE_INVENTORY_ITEM = "Create Inventory Item";
 export const INVENTORY_LIST = "Inventory";
 export const ADD_NOTES = "Create Notes";
 export const MENU = "Menu";
+export const MENU_SCREEN = "Menu";
+export const MESSAGES = "Messages";
 export const SIGN_OUT = "Sign Out";
+

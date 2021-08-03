@@ -143,7 +143,7 @@ const App = ({ navigation }) => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {state.userToken == null ? <AppointmentEditScreen /> : <TabNavigator />}
+        {state.userToken == null ? <AuthNavigator /> : <TabNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

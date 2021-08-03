@@ -4,16 +4,19 @@ import colors from "../assets/theme/colors";
 import HatPic from "../assets/images/HatPic.jpg";
 import AppText from "../components/AppText/index";
 import { Button } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 
-function Card({ title, subTitle }) {
+function Card({ title, subTitle, image, onPress }) {
   return (
-    <View style={styles.card}>
-      <Image style={styles.image} source={HatPic} />
-      <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>{title}</AppText>
-        <AppText style={styles.subTitle}>{subTitle}</AppText>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.card}>
+        <Image style={styles.image} source={HatPic} />
+        <View style={styles.detailsContainer}>
+          <AppText style={styles.title}>{title}</AppText>
+          <AppText style={styles.subTitle}>{subTitle}</AppText>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

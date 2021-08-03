@@ -3,14 +3,17 @@ import { Image, View, StyleSheet } from "react-native";
 import colors from "../../assets/theme/colors";
 import HatPic from "../../assets/images/HatPic.jpg";
 import AppText from "../../components/AppText/index";
+import ListItem from "../../components/ListItem";
 
-function AppointmentListingScreen(props) {
+function AppointmentDetailScreen({ route }) {
+  const appointments = route.params;
+
   return (
     <View>
-      <Image style={styles.image} source={HatPic} />
+      <Image style={styles.image} source={appointments.image} />
       <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>Appointment with Kevin T.</AppText>
-        <AppText style={styles.price}>$100</AppText>
+        <AppText style={styles.title}>{appointments.title}</AppText>
+        <AppText style={styles.price}>${appointments.price}</AppText>
         <View style={styles.userContainer}>
           <ListItem image={HatPic} title="Kevin" subTitle="test@yahoo.com" />
         </View>
@@ -42,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentListingScreen;
+export default AppointmentDetailScreen;

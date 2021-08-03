@@ -5,14 +5,11 @@ import { DASHBOARD } from '../../constants/routeNames'
 import { Text, View, Button } from 'react-native';
 
 
-const SettingsScreen = ( {navigation} ) => {
-    return(
+const SettingsScreen = () => {
+    return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text>Setting</Text>
-            <Button title="Go Back to Dashboard" onPress={() =>
-                navigation.navigate(DASHBOARD)
-            } />
-      </View>
+        </View>
     );
 };
 

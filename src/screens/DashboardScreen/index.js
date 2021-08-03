@@ -5,7 +5,7 @@ import { FlatList } from "react-native";
 import { View, Button } from "react-native";
 import Card from "../../components/Card";
 import Screen from "../../components/Screen";
-import { INVENTORY_LIST } from "../../constants/routeNames";
+import { INVENTORY_LIST, APPOINTMENT_DETAILS } from "../../constants/routeNames";
 
 
 const appointments = [
@@ -31,13 +31,14 @@ const Dashboard = ({ navigation, route }) => {
           <FlatList
             data={appointments}
             keyExtractor={appointment => appointment.id.toString()}
-            renderItem={({ item }) => 
-              <Card 
+            renderItem={({ item }) =>
+              <Card
                 title={item.title}
                 subTitle={"$" + item.price}
-                image={item.image} />
-          }
-               />
+                image={item.image}
+                onPress={() => navigation.navigate(APPOINTMENT_DETAILS, item)} />
+            }
+          />
         </Screen>
       </SafeAreaView>
     </ScrollView>
