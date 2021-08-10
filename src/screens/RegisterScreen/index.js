@@ -10,6 +10,9 @@ import CyberBar from "../../assets/images/CyberBar.png";
 import styles from "./styles";
 import Message from "../../components/Message/index";
 import AuthContext from "../../context/Provider";
+import { Formik } from "formik";
+import * as Yup from 'yup';
+import ErrorMessage from "../../components/ErrorMessage";
 
 const RegisterScreen = ({
   props,
@@ -21,13 +24,19 @@ const RegisterScreen = ({
   errors,
 }) => {
   const { navigate } = useNavigation();
-  const [isSecureEntry, setIsSecureEntry] = useState(true);
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isSignup, setIsSignup] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isSecureEntry, setIsSecureEntry] = useState(true);
+  // const [first_name, setFirstName] = useState("");
+  // const [last_name, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [isSignup, setIsSignup] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const validationSchema = Yup.object().shape({
+    first_name: Yup.string().required().min(2).label("First Name"),
+    last_name: Yup.string().required().min(2).label("Last Name"),
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(4).label("Password")
+  });
 
   const { signUp } = React.useContext(AuthContext);
 
@@ -48,58 +57,61 @@ const RegisterScreen = ({
         <Text style={styles.subTitle}>Create a free account</Text>
 
         <View style={styles.form}>
+        <Formik
+            initialValues={{ first_name: "", last_name: "", email: "", password: "" }}
+            onSubmit={(values) => signUp(values)}
+            validationSchema={validationSchema}
+        >
+          {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+            <>
+              <Input
+                label="First Name"
+                icon="account"
+                placeholder="First Name"
+                autoCapitalize="none"
+                onBlur={() => setFieldTouched("first_name")}
+                onChangeText={handleChange("first_name")}
+              />
+              <ErrorMessage error={errors.first_name} visible={touched.first_name} />
+              <Input
+                label="Last Name"
+                icon="account"
+                placeholder="Last Name"
+                onBlur={() => setFieldTouched("last_name")}
+                autoCapitalize="none"
+                onChangeText={handleChange("last_name")}
+              />
+              <ErrorMessage error={errors.last_name} visible={touched.last_name} />
+              <Input
+                label="Email"
+                icon="email"
+                placeholder="Enter Email"
+                onBlur={() => setFieldTouched("email")}
+                autoCapitalize="none"
+                onChangeText={handleChange("email")}
+              />
+              <ErrorMessage error={errors.email} visible={touched.email} />
+              <Input
+                label="Password"
+                icon="lock"
+                placeholder="Enter Password"
+                secureTextEntry
+                autoCapitalize="none"
+                onBlur={() => setFieldTouched("password")}
+                onChangeText={handleChange("password")}
+              />
+              <ErrorMessage error={errors.password} visible={touched.password} />
+              <CustomButton
+                loading={loading}
+                onPress={handleSubmit}
+                disabled={loading}
+                primary
+                title="Submit"
+              />
+            </>
+          )}
 
-          <Input
-            label="First Name"
-            icon="account"
-            placeholder="First Name"
-            value={first_name}
-            autoCapitalize="none"
-            onChangeText={setFirstName}
-          />
-          <Input
-            label="Last Name"
-            icon="account"
-            placeholder="Last Name"
-            value={last_name}
-            autoCapitalize="none"
-            onChangeText={setLastName}
-          />
-
-          <Input
-            label="Email"
-            icon="email"
-            placeholder="Enter Email"
-            value={email}
-            autoCapitalize="none"
-            onChangeText={setEmail}
-          />
-
-          <Input
-            label="Password"
-            icon="lock"
-            placeholder="Enter Password"
-            secureTextEntry={isSecureEntry}
-            autoCapitalize="none"
-            value={password}
-            onChangeText={setPassword}
-          />
-
-          <Input
-            label="Password Confirmation"
-            icon="lock-check"
-            placeholder="Password Confirmation"
-            autoCapitalize="none"
-            secureTextEntry={isSecureEntry}
-          />
-
-          <CustomButton
-            loading={loading}
-            onPress={() => signUp({ first_name, last_name, email, password })}
-            disabled={loading}
-            primary
-            title="Submit"
-          />
+        </Formik>  
 
           <View style={styles.createSection}>
             <Text style={styles.infoText}>Already have an account?</Text>

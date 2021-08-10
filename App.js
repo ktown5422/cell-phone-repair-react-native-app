@@ -14,6 +14,8 @@ import AppointmentEditScreen from "./src/screens/AppointmentEditScreen/index.js"
 
 
 const App = ({ navigation }) => {
+  const [isloading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -68,7 +70,7 @@ const App = ({ navigation }) => {
   const authContext = React.useMemo(
     () => ({
       signIn: async ({ email, password }) => {
-        const response = await fetch("http://localhost:3000/user/login", {
+        const response = await fetch("http://localhost:3000/api/users/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -103,7 +105,8 @@ const App = ({ navigation }) => {
       signOut: () => dispatch({ type: "SIGN_OUT" }),
 
       signUp: async ({ first_name, last_name, email, password }) => {
-        const response = await fetch("http://localhost:3000/user/register", {
+        // setIsLoading(true);
+        const response = await fetch("http://localhost:3000/api/users/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
