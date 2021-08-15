@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native";
 import { FlatList } from "react-native";
@@ -8,20 +8,11 @@ import Screen from "../../components/Screen";
 import { INVENTORY_LIST, APPOINTMENT_DETAILS } from "../../constants/routeNames";
 
 
-const appointments = [
-  {
-    id: 1,
-    title: 'Iphone X repair',
-    price: 100,
-    image: require('../../assets/images/HatPic.jpg')
-  },
-  {
-    id: 2,
-    title: 'Iphone 12 repair',
-    price: 200,
-    image: require('../../assets/images/HatPic.jpg')
-  }
-]
+const appointments = () => {
+  useEffect(() => {
+    fetch('http://localhost:3000/api/appointments/users/${user.id}')
+  }, []);
+}
 
 const Dashboard = ({ navigation, route }) => {
   return (

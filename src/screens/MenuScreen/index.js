@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ListItem from "../../components/ListItem";
 import Screen from "../../components/Screen";
 import { View, StyleSheet } from "react-native";
@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Icon from "../../components/Icon";
 import ListItemSeparator from "../../components/ListItemSeparator";
 import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS } from "../../constants/routeNames";
+import AuthContext from "../../context/Provider";
 
 const menuItems = [
   {
@@ -53,6 +54,7 @@ const menuItems = [
 ];
 
 function MenuScreen({ navigation }) {
+  const { signOut } = useContext(AuthContext);
   return (
     <Screen>
       <View style={styles.container}>
@@ -83,7 +85,7 @@ function MenuScreen({ navigation }) {
       </View>
       <ListItem
         title="Log Out"
-        onPress={() => (state.userToken == null)}
+        onPress={signOut}
         ImageComponent={<Icon name="logout" backgroundColor={colors.danger} />}
       />
     </Screen>

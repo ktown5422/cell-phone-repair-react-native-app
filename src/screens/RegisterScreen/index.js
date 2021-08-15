@@ -13,6 +13,7 @@ import AuthContext from "../../context/Provider";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import ErrorMessage from "../../components/ErrorMessage";
+import { ActivityIndicator } from "react-native";
 
 const RegisterScreen = ({
   props,
@@ -24,13 +25,7 @@ const RegisterScreen = ({
   errors,
 }) => {
   const { navigate } = useNavigation();
-  // const [isSecureEntry, setIsSecureEntry] = useState(true);
-  // const [first_name, setFirstName] = useState("");
-  // const [last_name, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [isSignup, setIsSignup] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const validationSchema = Yup.object().shape({
     first_name: Yup.string().required().min(2).label("First Name"),
     last_name: Yup.string().required().min(2).label("Last Name"),
@@ -38,15 +33,9 @@ const RegisterScreen = ({
     password: Yup.string().required().min(4).label("Password")
   });
 
-  const { signUp } = React.useContext(AuthContext);
+  // const { signUp } = React.useContext(AuthContext);
 
-  // const signUp = async() => {
-  //   try{
-  //     firebase.auth().createUserWithEmailAndPassword(email, password)
-  //   }catch(err){
-  //     console.log(err)
-  //   }
-  // }
+  
 
   return (
     <Container>
@@ -55,7 +44,7 @@ const RegisterScreen = ({
       <View>
         <Text style={styles.title}>Repair Shop Software</Text>
         <Text style={styles.subTitle}>Create a free account</Text>
-
+        {isLoading && <ActivityIndicator size="large" />}
         <View style={styles.form}>
         <Formik
             initialValues={{ first_name: "", last_name: "", email: "", password: "" }}

@@ -52,6 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "jest-expo": "^42.0.1",
+    "react-devtools": "^4.15.0",
     "react-test-renderer": "^17.0.2"
   },
   "private": true

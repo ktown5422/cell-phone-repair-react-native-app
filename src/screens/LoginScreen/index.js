@@ -20,7 +20,7 @@ const LoginScreen = ({ onSubmit, loading }) => {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
 
-  const { signIn } = React.useContext(AuthContext);
+  // const { signIn } = React.useContext(AuthContext);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
