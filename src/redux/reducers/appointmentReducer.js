@@ -1,7 +1,7 @@
 import { 
-    FETCH_APPOINTMENTS,
-    APPOINTMENT_DELETED,
-    APPOINTMENT_ADDED
+    GET_APPOINTMENTS,
+    DELETE_APPOINTMENT,
+    ADD_APPOINTMENT
     } from '../actions/actionTypes';
 
 const initialState = {
@@ -11,6 +11,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch(action.type) {
+        case GET_APPOINTMENTS:
+            return {
+                ...state,
+                appointments: action.payload
+            };
         default:
             return state;
     }

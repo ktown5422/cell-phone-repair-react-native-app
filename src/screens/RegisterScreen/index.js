@@ -9,7 +9,6 @@ import Input from "../../components/Input/index";
 import CyberBar from "../../assets/images/CyberBar.png";
 import styles from "./styles";
 import Message from "../../components/Message/index";
-import AuthContext from "../../context/Provider";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import ErrorMessage from "../../components/ErrorMessage";
@@ -48,7 +47,7 @@ const RegisterScreen = ({
         <View style={styles.form}>
         <Formik
             initialValues={{ first_name: "", last_name: "", email: "", password: "" }}
-            onSubmit={(values) => signUp(values)}
+            // onSubmit={(values) => signUp(values)}
             validationSchema={validationSchema}
         >
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (

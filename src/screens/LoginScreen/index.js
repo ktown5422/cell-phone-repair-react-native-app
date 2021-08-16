@@ -9,18 +9,23 @@ import Container from "../../components/Container/index";
 import Input from "../../components/Input/index";
 import CustomButton from "../../components/CustomButton";
 import Message from "../../components/Message/index";
-import AuthContext from "../../context/Provider";
 import AppText from "../../components/AppText";
 import { Formik } from "formik";
 import * as Yup from 'yup';
 import ErrorMessage from "../../components/ErrorMessage";
+import { connect } from 'react-redux';
+import Proptypes from 'prop-types';
+import { signIn } from '../../redux/actions/authAction';
+import { useDispatch } from "react-redux";
 
-const LoginScreen = ({ onSubmit, loading }) => {
+const LoginScreen = ({loading }) => {
   const { navigate } = useNavigation();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
 
   // const { signIn } = React.useContext(AuthContext);
+  const dispatch = useDispatch();
+
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -38,7 +43,7 @@ const LoginScreen = ({ onSubmit, loading }) => {
         <View style={styles.form}>
           <Formik
             initialValues={{ email: "", password: "" }}
-            onSubmit={(values) => signIn(values)}
+            onSubmit={(values) => dispatch(signIn(values))}
             validationSchema={validationSchema}
           >
             {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
@@ -97,4 +102,14 @@ const LoginScreen = ({ onSubmit, loading }) => {
   );
 };
 
-export default LoginScreen;
+LoginScreen.propTypes = {
+  signIn: Proptypes.func.isRequired,
+  isAuthenticated: Proptypes.bool,
+  dispatch: Proptypes.func
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { signIn })(LoginScreen);

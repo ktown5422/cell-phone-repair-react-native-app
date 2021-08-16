@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./src/navigators/AuthNavigator.js";
 import TabNavigator from "./src/navigators/TabNavigator.js";
-import AuthContext from "./src/context/Provider.js";
 import { Provider } from 'react-redux';
-import ErrorMessage from "./src/components/ErrorMessage.js";
 import jwtDecode from 'jwt-decode';
-import { applyMiddleware, createStore } from "redux";
+
 import store from './src/redux/store';
+import RootNavigator from "./src/navigators/RootNavigator.js";
 
 
 const App = ({ navigation }) => {
@@ -125,14 +124,14 @@ const App = ({ navigation }) => {
   //   []
   // );
 
+ 
+  // const getToken = () => store.getState().auth.token;
+  // console.log(token);
   
-
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-         <AuthNavigator /> 
-      </NavigationContainer>
+        <RootNavigator />
     </Provider>
   );
 };

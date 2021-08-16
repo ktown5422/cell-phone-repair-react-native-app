@@ -6,25 +6,28 @@ import { View, Button } from "react-native";
 import Card from "../../components/Card";
 import Screen from "../../components/Screen";
 import { INVENTORY_LIST, APPOINTMENT_DETAILS } from "../../constants/routeNames";
+import { connect } from 'react-redux';
+import Proptypes from 'prop-types';
+import { getAppointments } from '../../redux/actions/appointmentAction';
+  
 
-
-const appointments = () => {
+const Dashboard = () => {
+  
   useEffect(() => {
-    fetch('http://localhost:3000/api/appointments/users/${user.id}')
-  }, []);
-}
+    getAppointments()
+  }, []); 
 
-const Dashboard = ({ navigation, route }) => {
+
   return (
     <ScrollView>
       <SafeAreaView>
         <Screen>
           <FlatList
-            data={appointments}
-            keyExtractor={appointment => appointment.id.toString()}
+            data={null}
+            keyExtractor={appointments => appointments.id.toString()}
             renderItem={({ item }) =>
               <Card
-                title={item.title}
+                title={item.name}
                 subTitle={"$" + item.price}
                 image={item.image}
                 onPress={() => navigation.navigate(APPOINTMENT_DETAILS, item)} />
@@ -36,6 +39,12 @@ const Dashboard = ({ navigation, route }) => {
   );
 };
 
+Dashboard.propTypes = {
+  appointments: Proptypes.array.isRequired
+}
 
+const mapStateToProps = state => ({
+  appointments: state.appointments.appointments
+})
 
-export default Dashboard;
+export default connect(mapStateToProps, { getAppointments })(Dashboard);

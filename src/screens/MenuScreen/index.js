@@ -8,7 +8,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Icon from "../../components/Icon";
 import ListItemSeparator from "../../components/ListItemSeparator";
 import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS } from "../../constants/routeNames";
-import AuthContext from "../../context/Provider";
+import { useDispatch } from "react-redux";
+import { SIGN_OUT } from "../../redux/actions/actionTypes";
 
 const menuItems = [
   {
@@ -54,7 +55,7 @@ const menuItems = [
 ];
 
 function MenuScreen({ navigation }) {
-  const { signOut } = useContext(AuthContext);
+  const dispatch = useDispatch();
   return (
     <Screen>
       <View style={styles.container}>
@@ -85,7 +86,7 @@ function MenuScreen({ navigation }) {
       </View>
       <ListItem
         title="Log Out"
-        onPress={signOut}
+        onPress={() => dispatch({ type: SIGN_OUT })}
         ImageComponent={<Icon name="logout" backgroundColor={colors.danger} />}
       />
     </Screen>
