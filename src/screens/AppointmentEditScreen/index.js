@@ -65,11 +65,11 @@ function AppointmentEditScreen() {
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ name: "", price: "", description: "", phoneType: null, images: [] }}
+                    initialValues={{ name: "", price: "", description: "", phoneType: "", images: "" }}
                     onSubmit={(values) => console.log(values)}
                     validationSchema={validationSchema}
                 >
-                    {({ errors, setFieldTouched, touched, values, handleChange }) => (
+                    {({ errors, setFieldTouched, touched, values, handleChange, handleSubmit }) => (
                         <>
                             <ImageInput imageUri={imageUri} onChangeImage={(uri) => setImageUri(uri)} />
                             <Input maxLength={255} name="name" placeholder="Name" onBlur={() => setFieldTouched("name")} onChangeText={handleChange("name")} />
@@ -78,7 +78,7 @@ function AppointmentEditScreen() {
                             <ErrorMessage error={errors.price} visible={touched.price} />
                             <AppPicker icon="apps" items={phoneTypes} name="phoneType" numberOfColumns={3} placeholder="Phone Types" PickerItemComponent={PhonePickerItem} />
                             <InputButton placeholder="Pick a Date" onPress={() => showMode('date')} />
-                            {show && (
+                            
                                 <DateTimePicker
                                     testID="dateTimePicker"
                                     value={date}
@@ -86,10 +86,10 @@ function AppointmentEditScreen() {
                                     is24Hour={true}
                                     display='default'
                                     onChange={onChange} />
-                            )}
+                            
                             <InputButton placeholder="Pick a Time" onPress={() => showMode('time')} />
                             <Input maxLength={255} name="description" placeholder="Diagnostic Notes" onBlur={() => setFieldTouched("description")} onChangeText={handleChange("description")} />
-                            <CustomButton title="Create Appointment" />
+                            <CustomButton title="Create Appointment" onPress={handleSubmit} />
                         </>
                     )}
                 </Formik>

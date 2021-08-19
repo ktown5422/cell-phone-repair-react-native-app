@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet, ScrollView } from "react-native";
 import colors from "../../assets/theme/colors";
 import HatPic from "../../assets/images/HatPic.jpg";
 import AppText from "../../components/AppText/index";
@@ -7,18 +7,24 @@ import ListItem from "../../components/ListItem";
 
 function AppointmentDetailScreen({ route }) {
   const appointments = route.params;
+  
 
   return (
-    <View>
+    <ScrollView>
       <Image style={styles.image} source={appointments.image} />
       <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>{appointments.title}</AppText>
-        <AppText style={styles.price}>${appointments.price}</AppText>
+        <AppText style={styles.title}>{appointments.name}</AppText>
+        <AppText style={styles.price}>{appointments.price}</AppText>
+        <AppText style={styles.title}>{appointments.description}</AppText>
+        <AppText style={styles.price}>{appointments.phoneType}</AppText>
+        <AppText style={styles.price}>{appointments.appointmentDate}</AppText>
+        <AppText style={styles.price}>{appointments.appointmentTime}</AppText>
+
         <View style={styles.userContainer}>
           <ListItem image={HatPic} title="Kevin" subTitle="test@yahoo.com" />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

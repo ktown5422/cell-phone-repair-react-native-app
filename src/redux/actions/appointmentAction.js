@@ -1,14 +1,62 @@
 import axios from 'axios';
-import { GET_APPOINTMENTS } from './actionTypes';
+import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT} from './actionTypes';
 
 
-export const getAppointments = () => async dispatch => {
-   await axios.get('http://localhost:3000/api/appointments/users/611280b81de2dba7a282faca')
-        .then(res => {
-            dispatch({
-                type: GET_APPOINTMENTS,
-                payload: res.data
-            });
-        })
-        .catch(err => console.log(err));
+export const getAppointments = () => async (dispatch, getState) => {
+    const userId = getState().auth.id;
+    console.log('appointment', userId)
+    const response = await fetch(
+      `http://localhost:3000/api/appointments/users/${userId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('err')
+    }
+
+    const resData = await response.json();
+
+
+
+
+    console.log(resData);
+    dispatch({ type: GET_APPOINTMENTS, payload: resData.appointments });
 };
+
+export const createAppointment = ({name, price, description, phoneType, appointmentDate, appointmentTime}) => async (dispatch, getState) => {
+  const userId = getState().auth.id;
+  console.log('newappointment', userId)
+  const response = await fetch(
+     "http://localhost:3000/api/appointments/",
+     {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        price: price,
+        description: description,
+        phoneType: phoneType,
+        appointmentDate: appointmentDate,
+        appointmentTime: appointmentTime,
+        creator: userId
+      })
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('err')
+  }
+
+  const resData = await response.json();
+  console.log(resData);
+  dispatch({ type: CREATE_APPOINTMENT, appointmentData: { name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
+};
+
+// export const deleteAppointment

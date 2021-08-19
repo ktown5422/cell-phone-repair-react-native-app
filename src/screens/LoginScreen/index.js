@@ -102,14 +102,9 @@ const LoginScreen = ({loading }) => {
   );
 };
 
-LoginScreen.propTypes = {
-  signIn: Proptypes.func.isRequired,
-  isAuthenticated: Proptypes.bool,
-  dispatch: Proptypes.func
-}
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-})
+// const mapStateToProps = state => ({
+//   isAuthenticated: state.auth.isAuthenticated
+// })
 
-export default connect(mapStateToProps, { signIn })(LoginScreen);
+export default connect(null)(LoginScreen);

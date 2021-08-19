@@ -13,28 +13,22 @@ import { Formik } from "formik";
 import * as Yup from 'yup';
 import ErrorMessage from "../../components/ErrorMessage";
 import { ActivityIndicator } from "react-native";
+import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
+import { signUp } from '../../redux/actions/authAction';
 
-const RegisterScreen = ({
-  props,
-  onSubmit,
-  onChange,
-  form,
-  loading,
-  error,
-  errors,
-}) => {
+const RegisterScreen = ({loading}) => {
   const { navigate } = useNavigation();
-  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+
   const validationSchema = Yup.object().shape({
     first_name: Yup.string().required().min(2).label("First Name"),
     last_name: Yup.string().required().min(2).label("Last Name"),
     email: Yup.string().required().email().label("Email"),
     password: Yup.string().required().min(4).label("Password")
   });
-
-  // const { signUp } = React.useContext(AuthContext);
-
-  
 
   return (
     <Container>
@@ -43,11 +37,11 @@ const RegisterScreen = ({
       <View>
         <Text style={styles.title}>Repair Shop Software</Text>
         <Text style={styles.subTitle}>Create a free account</Text>
-        {isLoading && <ActivityIndicator size="large" />}
+        
         <View style={styles.form}>
         <Formik
             initialValues={{ first_name: "", last_name: "", email: "", password: "" }}
-            // onSubmit={(values) => signUp(values)}
+            onSubmit={(values) => dispatch(signUp(values))}
             validationSchema={validationSchema}
         >
           {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
@@ -117,4 +111,5 @@ const RegisterScreen = ({
   );
 };
 
-export default RegisterScreen;
+
+export default connect(null)(RegisterScreen);

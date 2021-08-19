@@ -6,7 +6,8 @@ import AppText from "../components/AppText/index";
 import { Button } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 
-function Card({ title, subTitle, image, onPress }) {
+function Card({ title, subTitle, image, onPress, appointmentDate, appointmentTime, description, phoneType }) {
+  console.log('inside of card')
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
