@@ -10,6 +10,11 @@ import ListItemSeparator from "../../components/ListItemSeparator";
 import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS } from "../../constants/routeNames";
 import { useDispatch } from "react-redux";
 import { SIGN_OUT } from "../../redux/actions/actionTypes";
+import { useSelector } from "react-redux";
+
+
+
+
 
 const menuItems = [
   {
@@ -57,13 +62,15 @@ const menuItems = [
 
 
 function MenuScreen({ navigation }) {
+  const firstName = useSelector(state => state.auth.first_name);
+  const email = useSelector(state => state.auth.email);
   const dispatch = useDispatch();
   return (
     <Screen>
       <View style={styles.container}>
         <ListItem
-          title="Kevin T"
-          subTitle="test@yahoo.com"
+          title={firstName}
+          subTitle={email}
           image={require("../../assets/images/HatPic.jpg")}
         />
       </View>

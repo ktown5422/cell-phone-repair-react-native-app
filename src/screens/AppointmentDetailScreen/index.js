@@ -4,11 +4,13 @@ import colors from "../../assets/theme/colors";
 import HatPic from "../../assets/images/HatPic.jpg";
 import AppText from "../../components/AppText/index";
 import ListItem from "../../components/ListItem";
+import { useSelector } from "react-redux";
 
 function AppointmentDetailScreen({ route }) {
   const appointments = route.params;
-  
-
+  const firstName = useSelector(state => state.auth.first_name);
+  const email = useSelector(state => state.auth.email);
+ 
   return (
     <ScrollView>
       <Image style={styles.image} source={appointments.image} />
@@ -21,7 +23,7 @@ function AppointmentDetailScreen({ route }) {
         <AppText style={styles.price}>{appointments.appointmentTime}</AppText>
 
         <View style={styles.userContainer}>
-          <ListItem image={HatPic} title="Kevin" subTitle="test@yahoo.com" />
+          <ListItem image={HatPic} title={firstName} subTitle={email} />
         </View>
       </View>
     </ScrollView>

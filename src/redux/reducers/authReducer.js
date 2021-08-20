@@ -21,8 +21,7 @@ export default function(state = initialState, action) {
                 isLoading: false,
             }
         case SIGN_OUT:
-        case LOGIN_FAIL:
-            AsyncStorage.removeItem('token');
+            AsyncStorage.removeItem('token')
             return {
                 ...state,
                 token: null,

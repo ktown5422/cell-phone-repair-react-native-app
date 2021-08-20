@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native";
 import { FlatList } from "react-native";
@@ -11,25 +11,67 @@ import { connect, useDispatch } from 'react-redux';
 import Proptypes from 'prop-types';
 import { getAppointments } from '../../redux/actions/appointmentAction';
 import { useSelector } from "react-redux";
+import { ActivityIndicator } from "react-native";
+import colors from "../../assets/theme/colors";
+import { Text } from "react-native";
   
 
 const Dashboard = ({ navigation }) => {
-  // const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
 
   const appointments = useSelector(state => state.appointments.appointments);
 
-  console.log('Component',appointments)
+  const loadAppointments = useCallback( () => {
+    console.log('dashboard load')
+    setIsLoading(true);
+    try {
+       dispatch(getAppointments())
+    } catch {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
-    dispatch(getAppointments())
-  }, [dispatch]); 
+    const willFocus = navigation.addListener('focus',() => {
+      loadAppointments();
+    });
+      return () => { 
+        willFocus;
+      };
+  }, [loadAppointments, navigation]);
 
-  // const loadAppointments = () => {
-  //   const response = dispatch(getAppointments());
-  //   setAppointments(response)
-  // }
+  useEffect(() => {
+    loadAppointments();
+  }, [dispatch, loadAppointments]); 
+
+  if (error) {
+    return (
+      <View>
+        <Text>An error occured!</Text>
+        <Button title="Try Again" onPress={loadAppointments} color={colors.primary} />
+      </View>
+    )
+  }
+
+  if(isLoading){
+    return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size='large' color={colors.primary} />
+    </View>
+    );
+  }
+
+  if(!isLoading && appointments.length === 0){
+    return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>No Appointments found</Text>
+    </View>
+    );
+  }
   
   // const appointments = [
   //   {

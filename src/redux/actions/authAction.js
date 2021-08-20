@@ -27,7 +27,7 @@ export const signIn = ({email, password}) => async dispatch => {
       throw new Error(resData.message);
     }
     console.log(resData);
-    dispatch({ type: SIGN_IN, payload: {id: resData.id, token: resData.token }});
+    dispatch({ type: SIGN_IN, payload: {id: resData.id, token: resData.token, first_name: resData.first_name, email: resData.email }});
   } catch (err) {
     console.log(err);
   }
@@ -48,15 +48,16 @@ export const signUp = ({first_name, last_name, email, password}) => async dispat
           password: password,
         }),
       });
-      
-      const resData = await response.json();
+
       if (!response.ok) {
         throw new Error(resData.message);
       }
-      console.log(resData);
-      dispatch({ type: SIGN_UP });
+      
+      const resData = await response.json();
+      
+      dispatch({ type: SIGN_UP});
     } catch (err) {
-      console.log(err);
+      throw err;
   
     }
 };
