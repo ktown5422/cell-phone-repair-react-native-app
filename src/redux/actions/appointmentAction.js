@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT} from './actionTypes';
 
 
@@ -33,6 +34,8 @@ export const getAppointments = () => async (dispatch, getState) => {
 
 export const createAppointment = ({name, price, description, phoneType, appointmentDate, appointmentTime}) => async (dispatch, getState) => {
   const userId = getState().auth.id;
+  
+
   console.log('newappointment', userId)
 
   try {

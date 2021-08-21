@@ -11,6 +11,7 @@ import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS } from "
 import { useDispatch } from "react-redux";
 import { SIGN_OUT } from "../../redux/actions/actionTypes";
 import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -95,7 +96,7 @@ function MenuScreen({ navigation }) {
       </View>
       <ListItem
         title="Log Out"
-        onPress={() => dispatch({ type: SIGN_OUT })}
+        onPress={() => dispatch({ type: SIGN_OUT, payload: AsyncStorage.removeItem('token') })}
         ImageComponent={<Icon name="logout" backgroundColor={colors.danger} />}
       />
     </Screen>

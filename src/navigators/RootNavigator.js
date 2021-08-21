@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,29 +8,25 @@ import {
     LOGIN, 
     REGISTER, 
     MENU,
-    DASHBOARD,
     INVENTORY_LIST,
-    USER_PROFILE,
     INVOICE_LIST,
     CREATE_APPOINTMENT,
     APPOINTMENTS, 
 } from "../constants/routeNames";
 import { NavigationContainer } from "@react-navigation/native";
 import InventoryScreen from "../screens/InventoryScreen";
-import UserProfileScreen from "../screens/UserProfileScreen";
-import HomeNavigator from "./HomeNavigator";
 import MenuNavigator from "./MenuNavigator";
 import InvoiceListScreen from "../screens/InvoiceListScreen";
 import AppointmentNavigator from "./AppointmentNavigator";
-import AppointmentEditScreen from "../screens/AppointmentEditScreen";
-import NewAppointmentButton from "./NewAppointmentButton";
-import store from '../redux/store';
+import AppointmentCreateScreen from "../screens/AppointmentCreateScreen";
 import { useSelector } from "react-redux";
+
 
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={LOGIN} component={LoginScreen} />
@@ -70,7 +66,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name={CREATE_APPOINTMENT}
-        component={AppointmentEditScreen}
+        component={AppointmentCreateScreen}
         options={{
           tabBarLabel: null,
           tabBarIcon: ({ color }) => (
@@ -105,6 +101,7 @@ const TabNavigator = () => {
 
 const RootNavigator = () => {
     
+
     const getToken = useSelector(state => !!state.auth.token);
     // const getToken = () => store.getState().auth.token;
  
@@ -113,6 +110,7 @@ const RootNavigator = () => {
     // useEffect(() => {
     //     getToken();
     // }, [getToken]);
+
 
     return (
         <NavigationContainer>

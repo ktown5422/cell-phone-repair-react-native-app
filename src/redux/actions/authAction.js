@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { SIGN_IN, SIGN_UP } from './actionTypes';
+import { SIGN_IN, SIGN_OUT, SIGN_UP } from './actionTypes';
 
 
 export const signIn = ({email, password}) => async dispatch => {
@@ -21,11 +21,13 @@ export const signIn = ({email, password}) => async dispatch => {
           }
         );
 
-  
+
+      if (!response.ok) {
+          throw new Error(resData.message);
+        }
+
     const resData = await response.json();
-    if (!response.ok) {
-      throw new Error(resData.message);
-    }
+    
     console.log(resData);
     dispatch({ type: SIGN_IN, payload: {id: resData.id, token: resData.token, first_name: resData.first_name, email: resData.email }});
   } catch (err) {
@@ -61,4 +63,13 @@ export const signUp = ({first_name, last_name, email, password}) => async dispat
   
     }
 };
-      
+
+// export const saveData = async (resData) => {
+//   try {
+//     const userData = JSON.stringify(resData)
+//     await AsyncStorage.setItem('userData', userData)
+//     alert('Data successfully saved')
+//   } catch (e) {
+//     alert('Failed to save the data to the storage')
+//   }
+// }

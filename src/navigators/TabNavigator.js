@@ -3,21 +3,16 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {
   MENU,
-  DASHBOARD,
   INVENTORY_LIST,
-  USER_PROFILE,
   INVOICE_LIST,
   CREATE_APPOINTMENT,
   APPOINTMENTS,
 } from "../constants/routeNames";
 import InventoryScreen from "../screens/InventoryScreen";
-import UserProfileScreen from "../screens/UserProfileScreen";
-import HomeNavigator from "./HomeNavigator";
 import MenuNavigator from "./MenuNavigator";
 import InvoiceListScreen from "../screens/InvoiceListScreen";
 import AppointmentNavigator from "./AppointmentNavigator";
-import AppointmentEditScreen from "../screens/AppointmentEditScreen";
-import NewAppointmentButton from "./NewAppointmentButton";
+import AppointmentCreateScreen from "../screens/AppointmentCreateScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -50,7 +45,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name={CREATE_APPOINTMENT}
-        component={AppointmentEditScreen}
+        component={AppointmentCreateScreen}
         options={{
           tabBarLabel: null,
           tabBarIcon: ({ color }) => (

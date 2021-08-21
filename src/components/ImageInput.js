@@ -32,11 +32,13 @@ function ImageInput({ imageUri, onChangeImage }) {
     const selectImage = async () => {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
+                // base64: true,   
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 quality: 0.5
             });
             if (!result.cancelled)
                 onChangeImage(result.uri);
+                console.log(result)
         } catch (error) {
             console.log('Error reading an image', error);
         }

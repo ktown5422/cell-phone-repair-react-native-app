@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import AuthNavigator from "./src/navigators/AuthNavigator.js";
-import TabNavigator from "./src/navigators/TabNavigator.js";
+import React from "react";
 import { Provider } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 
-import store from './src/redux/store';
+import reduxStore from './src/redux/store';
 import RootNavigator from "./src/navigators/RootNavigator.js";
+import { PersistGate } from "redux-persist/integration/react";
+
 
 
 const App = ({ navigation }) => {
@@ -128,10 +126,15 @@ const App = ({ navigation }) => {
   // const getToken = () => store.getState().auth.token;
   // console.log(token);
   
+const {store, persistor} = reduxStore();
+
 
   return (
+    
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <RootNavigator />
+      </PersistGate>
     </Provider>
   );
 };
