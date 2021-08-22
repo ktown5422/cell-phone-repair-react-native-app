@@ -20,6 +20,7 @@ export default function(state = initialState, action) {
                 isLoading: false,
             }
         case SIGN_OUT:
+            
             return {
                 token: null,
                 user: null,

@@ -17,14 +17,17 @@ import { connect } from 'react-redux';
 import Proptypes from 'prop-types';
 import { signIn } from '../../redux/actions/authAction';
 import { useDispatch } from "react-redux";
+import { CommonActions } from "@react-navigation/native";
 
-const LoginScreen = ({loading }) => {
-  const { navigate } = useNavigation();
+const LoginScreen = ({loading, navigation }) => {
+ 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
 
   // const { signIn } = React.useContext(AuthContext);
   const dispatch = useDispatch();
+
+  
 
 
   const validationSchema = Yup.object().shape({

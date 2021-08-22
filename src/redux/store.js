@@ -24,7 +24,6 @@ const middleware = [thunk];
 export default () => {
 let store = createStore(
     persistedReducer,
-    // rootReducer,
     initialState, 
     composeWithDevTools(applyMiddleware(...middleware)),
     );

@@ -99,8 +99,8 @@ const TabNavigator = () => {
 };
 
 
-const RootNavigator = () => {
-    
+const RootNavigator = ({ navigation }) => {
+ 
 
     const getToken = useSelector(state => !!state.auth.token);
     // const getToken = () => store.getState().auth.token;

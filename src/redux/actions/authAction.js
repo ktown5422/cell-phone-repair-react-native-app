@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LOGIN } from '../../constants/routeNames';
 
 import { SIGN_IN, SIGN_OUT, SIGN_UP } from './actionTypes';
 
@@ -29,6 +30,7 @@ export const signIn = ({email, password}) => async dispatch => {
     const resData = await response.json();
     
     console.log(resData);
+    
     dispatch({ type: SIGN_IN, payload: {id: resData.id, token: resData.token, first_name: resData.first_name, email: resData.email }});
   } catch (err) {
     console.log(err);

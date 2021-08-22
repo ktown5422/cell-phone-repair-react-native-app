@@ -96,7 +96,7 @@ function MenuScreen({ navigation }) {
       </View>
       <ListItem
         title="Log Out"
-        onPress={() => dispatch({ type: SIGN_OUT, payload: AsyncStorage.removeItem('token') })}
+        onPress={() => dispatch({ type: SIGN_OUT })}
         ImageComponent={<Icon name="logout" backgroundColor={colors.danger} />}
       />
     </Screen>

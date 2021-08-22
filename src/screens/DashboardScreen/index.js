@@ -22,6 +22,8 @@ const Dashboard = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
 
+ 
+
   const appointments = useSelector(state => state.appointments.appointments);
 
   const loadAppointments = useCallback( () => {
@@ -48,19 +50,20 @@ const Dashboard = ({ navigation }) => {
     loadAppointments();
   }, [dispatch, loadAppointments]); 
 
-  if (error) {
-    return (
-      <View>
-        <Text>An error occured!</Text>
-        <Button title="Try Again" onPress={loadAppointments} color={colors.primary} />
-      </View>
-    )
-  }
+  // if (error) {
+  //   return (
+  //     <View>
+  //       <Text>An error occured!</Text>
+  //       <Button title="Try Again" onPress={loadAppointments} color={colors.primary} />
+  //     </View>
+  //   )
+  // }
 
-  if(isLoading){
+  if(isLoading || error){
     return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ActivityIndicator size='large' color={colors.primary} />
+      <Button title="Try Again" onPress={loadAppointments} color={colors.primary} />
     </View>
     );
   }
