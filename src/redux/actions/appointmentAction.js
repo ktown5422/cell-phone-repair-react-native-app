@@ -32,21 +32,21 @@ export const getAppointments = () => async (dispatch, getState) => {
     
 };
 
-export const createAppointment = ({name, price, description, phoneType, appointmentDate, appointmentTime}) => async (dispatch, getState) => {
+export const createAppointment = ({ imageUri, name, price, description, phoneType, appointmentDate, appointmentTime }) => async (dispatch, getState) => {
   const userId = getState().auth.id;
-  
 
   console.log('newappointment', userId)
 
   try {
     const response = await fetch(
-      "http://localhost:3000/api/appointments/",
+      "http://localhost:3000/api/appointments/", 
       {
        method: 'POST',
        headers: {
-         'Content-Type': 'application/json'
+         'Content-Type': 'multipart/form-data'
        },
        body: JSON.stringify({
+         imageUri: imageUri,
          name: name,
          price: price,
          description: description,

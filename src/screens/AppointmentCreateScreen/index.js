@@ -15,6 +15,10 @@ import * as Permissions from 'expo-permissions';
 import ImageInput from '../../components/ImageInput';
 import { Image } from 'react-native';
 import { ScrollView } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { createAppointment } from '../../redux/actions/appointmentAction';
+import AppFormPicker from '../../components/AppFormPicker';
+import CustomDatePicker from '../../components/CustomDatePicker';
 
 
 const validationSchema = Yup.object().shape({
@@ -26,47 +30,64 @@ const validationSchema = Yup.object().shape({
 });
 
 const phoneTypes = [
-    { label: "iphone 6", value: 1, backgroundColor: 'red', icon: 'cellphone' },
-    { label: "iphone 6s", value: 2, backgroundColor: 'green', icon: 'cellphone' },
-    { label: "iphone 6s +", value: 3, backgroundColor: 'purple', icon: 'cellphone' },
-    { label: "iphone 6", value: 4, backgroundColor: 'red', icon: 'cellphone' },
-    { label: "iphone 6s", value: 5, backgroundColor: 'green', icon: 'cellphone' },
-    { label: "iphone 6s +", value: 6, backgroundColor: 'purple', icon: 'cellphone' },
-    { label: "iphone 6", value: 7, backgroundColor: 'red', icon: 'cellphone' },
-    { label: "iphone 6s", value: 8, backgroundColor: 'green', icon: 'cellphone' },
-    { label: "iphone 6s +", value: 9, backgroundColor: 'purple', icon: 'cellphone' },
+    { label: "iphone 5c", value: 1, backgroundColor: 'red', icon: 'cellphone' },
+    { label: "iphone 6", value: 2, backgroundColor: 'green', icon: 'cellphone' },
+    { label: "iphone 6+", value: 3, backgroundColor: 'purple', icon: 'cellphone' },
+    { label: "iphone 6s", value: 4, backgroundColor: 'red', icon: 'cellphone' },
+    { label: "iphone 7", value: 5, backgroundColor: 'green', icon: 'cellphone' },
+    { label: "iphone 7+", value: 6, backgroundColor: 'purple', icon: 'cellphone' },
+    { label: "iphone 8", value: 7, backgroundColor: 'red', icon: 'cellphone' },
+    { label: "iphone 8+", value: 8, backgroundColor: 'green', icon: 'cellphone' },
+    { label: "iphone X", value: 9, backgroundColor: 'purple', icon: 'cellphone' },
+    { label: "iphone XS", value: 10, backgroundColor: 'red', icon: 'cellphone' },
+    { label: "iphone 11", value: 11, backgroundColor: 'green', icon: 'cellphone' },
+    { label: "iphone 12", value: 12, backgroundColor: 'purple', icon: 'cellphone' },
 ];
 
 
 function AppointmentEditScreen() {
+    const dispatch = useDispatch();
     const [imageUri, setImageUri] = useState();
-    const [date, setDate] = useState(new Date());
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
-    const [text, setText] = useState('Empty');
+   
+    // const addAppointment = values => {
+    //     const data = new FormData();
+    //     data.append('name', values.name)
+    //     data.append('price', values.price)
+    //     data.append('description', values.description)
+    //     data.append('phoneType', values.phoneType)
+    //     data.append('appointmentDate', values.appointmentDate)
+    //     data.append('appointmentTime', values.appointmentTime)
+    //     data.append('imageUri', values.imageUri)
+    //   }
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
+      const handleSubmit = async (values) => {
+        
+        const data = new FormData();
+        data.append('name', values.name);
+        data.append('price', values.price);
+        data.append('description', values.description);
+        data.append('phoneType', values.phoneType.value);
+        data.append('appointmentDate', values.appointmentDate);
+        data.append('appointmentTime', values.appointmentTime);
 
-        let tempDate = new Date(currentDate);
-        let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-        let fTime = 'Hours: ' + tempDate.getHours() + ' | Minutes: ' + tempDate.getMinutes();
-        setText(fDate + '\n' + fTime)
-    }
+        values.images.forEach((image, index) =>
+            data.append("imageUri", {
+                name: "image" + index,
+                type: "image/jpeg",
+                uri: image,
+            })
+        );
+        return dispacth(createAppointment(data));
+      }
 
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode)
-    }
+      
 
     return (
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ name: "", price: "", description: "", phoneType: "", images: "" }}
-                    onSubmit={(values) => console.log(values)}
+                    initialValues={{ name: "", price: "", description: "", phoneType: null, appointmentDate: "", appointmentTime: "", images: [] }}
+                    onSubmit={handleSubmit}
                     validationSchema={validationSchema}
                 >
                     {({ errors, setFieldTouched, touched, values, handleChange, handleSubmit }) => (
@@ -76,23 +97,14 @@ function AppointmentEditScreen() {
                             <ErrorMessage error={errors.name} visible={touched.name} />
                             <Input keyboardType="numeric" maxLength={8} name="price" placeholder="Price" onBlur={() => setFieldTouched("price")} onChangeText={handleChange("price")} />
                             <ErrorMessage error={errors.price} visible={touched.price} />
-                            <AppPicker icon="apps" items={phoneTypes} name="phoneType" numberOfColumns={3} placeholder="Phone Types" PickerItemComponent={PhonePickerItem} />
-                            <InputButton placeholder="Pick a Date" onPress={() => showMode('date')} />
+                            <AppFormPicker icon="apps" items={phoneTypes} name="phoneType" numberOfColumns={3} placeholder="Pick a Phone" PickerItemComponent={PhonePickerItem} />
                             
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={date}
-                                    mode={mode}
-                                    is24Hour={true}
-                                    display='default'
-                                    onChange={onChange} />
-                            
-                            <InputButton placeholder="Pick a Time" onPress={() => showMode('time')} />
                             <Input maxLength={255} name="description" placeholder="Diagnostic Notes" onBlur={() => setFieldTouched("description")} onChangeText={handleChange("description")} />
                             <CustomButton title="Create Appointment" onPress={handleSubmit} />
                         </>
                     )}
                 </Formik>
+                <CustomDatePicker defaultDate="4444" />
             </ScrollView>
         </Screen>
     );

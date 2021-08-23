@@ -8,7 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
 import { useEffect } from 'react';
 
-function ImageInput({ imageUri, onChangeImage }) {
+function ImageInput({ imageUri, onChangeImage, ...props }) {
     useEffect(() => {
         requestPermission();
     }, []);
