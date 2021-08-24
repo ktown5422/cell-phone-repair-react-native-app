@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import ErrorMessage from '../../components/ErrorMessage';
 import InputButton from '../../components/InputButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import PhonePickerItem from '../../components/PhonePickerItem';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -19,6 +19,8 @@ import { useDispatch } from 'react-redux';
 import { createAppointment } from '../../redux/actions/appointmentAction';
 import AppFormPicker from '../../components/AppFormPicker';
 import CustomDatePicker from '../../components/CustomDatePicker';
+import AppText from '../../components/AppText';
+import CustomTimePicker from '../../components/CustomTimePicker';
 
 
 const validationSchema = Yup.object().shape({
@@ -100,11 +102,14 @@ function AppointmentEditScreen() {
                             <AppFormPicker icon="apps" items={phoneTypes} name="phoneType" numberOfColumns={3} placeholder="Pick a Phone" PickerItemComponent={PhonePickerItem} />
                             
                             <Input maxLength={255} name="description" placeholder="Diagnostic Notes" onBlur={() => setFieldTouched("description")} onChangeText={handleChange("description")} />
+                            <AppText>Pick a Date:</AppText>
+                            <CustomDatePicker onDateChange={(date) => date.format('MMMM Do, YYYY')} />
+                            <AppText>Pick a Time:</AppText>
+                            <CustomTimePicker onDateChange={(date) => date.format('LT')} />
                             <CustomButton title="Create Appointment" onPress={handleSubmit} />
                         </>
                     )}
                 </Formik>
-                <CustomDatePicker defaultDate="4444" />
             </ScrollView>
         </Screen>
     );

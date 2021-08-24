@@ -6,7 +6,7 @@ import Input from './Input';
 import AppText from './AppText';
 import colors from '../assets/theme/colors';
 
-const CustomDatePicker = (props) => {
+const CustomTimePicker = (props) => {
     const { defaultDate } = props;
     const [date, setDate] = useState(moment(defaultDate))
     const [show, setShow] = useState(false);
@@ -40,7 +40,7 @@ const CustomDatePicker = (props) => {
             activeOpacity={0} 
             onPress={() => setShow(true)}>
             <View>
-                <Text>{date.format('MMMM Do, YYYY')}</Text>
+                <Text>{date.format('LT')}</Text>
                 
                 <Modal 
                     transparent={true}
@@ -76,9 +76,8 @@ const CustomDatePicker = (props) => {
                                         <DateTimePicker
                                             display="spinner"
                                             value={new Date(date)}
-                                            mode="date"
-                                            minimumDate={new Date(moment().add(120, 'years').format('YYYY-MM-DD'))}
-                                            maximumDate={new Date(moment().format('YYYY-MM-DD'))}
+                                            mode="time"
+                                            is24Hour={true}
                                             onChange={onChange} 
                                         />
                                     </View>
@@ -132,4 +131,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default CustomDatePicker;
+export default CustomTimePicker;
