@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { TabActions } from '@react-navigation/native';
 import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT} from './actionTypes';
 
 
@@ -32,10 +33,10 @@ export const getAppointments = () => async (dispatch, getState) => {
     
 };
 
-export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime }) => async (dispatch, getState) => {
+export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime }) => async (dispatch, getState, navigation) => {
   const userId = getState().auth.id;
 
-  console.log('newappointment', imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime)
+  // console.log('newappointment', imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime)
 
     const response = await fetch(
       "http://localhost:3000/api/appointments/", 
@@ -63,8 +64,11 @@ export const createAppointment = ({ imageUrl, name, price, description, phoneTyp
      throw new Error('err')
    }
  
-   dispatch({ type: CREATE_APPOINTMENT, resData: { imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
-  
+   dispatch({ type: CREATE_APPOINTMENT, responseData: { imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
+
+  const jumpToAction = TabActions.jumpTo('AppointmentNavigator');
+
+  navigation.dispatch(jumpToAction);  
 };
 
 // export const deleteAppointment

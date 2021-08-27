@@ -14,6 +14,8 @@ function Card({ title, subTitle, uri: imageUrl, onPress, appointmentDate, appoin
         <View style={styles.detailsContainer}>
           <AppText style={styles.title}>{title}</AppText>
           <AppText style={styles.subTitle}>{subTitle}</AppText>
+          <AppText style={styles.appointmentDate}>{appointmentDate}</AppText>
+          <AppText style={styles.appointmentTime}>{appointmentTime}</AppText>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -36,7 +38,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   title: {
-    marginBottom: 7,
+    marginBottom: 1,
+  },
+  appointmentDate: {
+    color: colors.secondary,
+  },
+  appointmentTime: {
+    color: colors.danger,
   },
   detailsContainer: {
     padding: 20,

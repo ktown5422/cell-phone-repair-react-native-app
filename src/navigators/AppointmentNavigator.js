@@ -8,7 +8,7 @@ const AppointmentStack = createStackNavigator();
 
 function AppointmentNavigator() {
     return (
-        <AppointmentStack.Navigator mode="modal">
+        <AppointmentStack.Navigator>
             <AppointmentStack.Screen name={APPOINTMENT_LIST} component={Dashboard} />
             <AppointmentStack.Screen name={APPOINTMENT_DETAILS} component={AppointmentDetailScreen} />
         </AppointmentStack.Navigator>

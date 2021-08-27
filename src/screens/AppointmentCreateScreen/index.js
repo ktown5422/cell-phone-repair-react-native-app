@@ -73,7 +73,7 @@ const AppointmentEditScreen = () => {
                         <>
                             <Input 
                                 maxLength={255} 
-                                placeholder="Set Image Url:" 
+                                placeholder="Paste Image Url:" 
                                 onBlur={() => setFieldTouched("imageUrl")} 
                                 onChangeText={handleChange("imageUrl")} 
                             />

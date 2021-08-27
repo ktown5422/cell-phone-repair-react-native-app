@@ -5,6 +5,7 @@ import HatPic from "../../assets/images/HatPic.jpg";
 import AppText from "../../components/AppText/index";
 import ListItem from "../../components/ListItem";
 import { useSelector } from "react-redux";
+import CustomButton from "../../components/CustomButton";
 
 function AppointmentDetailScreen({ route }) {
   const appointments = route.params;
@@ -16,16 +17,19 @@ function AppointmentDetailScreen({ route }) {
       <Image style={styles.image} source={{ uri: appointments.imageUrl }} />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{appointments.name}</AppText>
-        <AppText style={styles.price}>{appointments.price}</AppText>
+        <AppText style={styles.price}>${appointments.price}</AppText>
         <AppText style={styles.title}>{appointments.description}</AppText>
         <AppText style={styles.price}>{appointments.phoneType}</AppText>
         <AppText style={styles.price}>{appointments.appointmentDate}</AppText>
         <AppText style={styles.price}>{appointments.appointmentTime}</AppText>
-
+      </View>
+      <View>
+        <CustomButton title="Edit" />
+        <CustomButton title="delete" />
+      </View>
         <View style={styles.userContainer}>
           <ListItem image={HatPic} title={firstName} subTitle={email} />
         </View>
-      </View>
     </ScrollView>
   );
 }

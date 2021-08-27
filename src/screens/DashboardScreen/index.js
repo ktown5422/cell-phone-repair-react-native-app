@@ -25,7 +25,6 @@ const Dashboard = ({ navigation }) => {
  
 
   const appointments = useSelector(state => state.appointments.appointments);
-
   const loadAppointments = useCallback( () => {
     console.log('dashboard load')
     setIsLoading(true);
@@ -98,12 +97,13 @@ const Dashboard = ({ navigation }) => {
           <FlatList
           onRefresh={getAppointments}
             data={appointments}
-            keyExtractor={(appointment) => appointment.id.toString()}
+            keyExtractor={(appointment) => appointment.id}
             renderItem={({ item }) =>
               <Card
-                title={item.name}
-                subTitle={"$" + item.price}
                 uri={item.imageUrl}
+                title={item.name}
+                appointmentDate={item.appointmentDate}
+                appointmentTime={item.appointmentTime}
                 onPress={() => navigation.navigate(APPOINTMENT_DETAILS, item)} />
             }
             refreshing={refreshing}

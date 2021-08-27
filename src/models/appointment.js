@@ -1,5 +1,6 @@
 class Appointment {
-    constructor(name, price, description, phoneType, appointmentDate, appointmentTime, creator){
+    constructor(imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, creator){
+        this.imageUrl = imageUrl;
         this.name = name;
         this.price = price;
         this.description = description;
