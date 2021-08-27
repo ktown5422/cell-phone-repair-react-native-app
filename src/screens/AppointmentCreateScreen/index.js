@@ -47,7 +47,7 @@ const phoneTypes = [
 ];
 
 
-function AppointmentEditScreen() {
+const AppointmentEditScreen = () => {
     const dispatch = useDispatch();
     const [imageUri, setImageUri] = useState();
    
@@ -62,25 +62,6 @@ function AppointmentEditScreen() {
     //     data.append('imageUri', values.imageUri)
     //   }
 
-      const handleSubmit = async (values) => {
-        
-        const data = new FormData();
-        data.append('name', values.name);
-        data.append('price', values.price);
-        data.append('description', values.description);
-        data.append('phoneType', values.phoneType.value);
-        data.append('appointmentDate', values.appointmentDate);
-        data.append('appointmentTime', values.appointmentTime);
-
-        values.images.forEach((image, index) =>
-            data.append("imageUri", {
-                name: "image" + index,
-                type: "image/jpeg",
-                uri: image,
-            })
-        );
-        return dispacth(createAppointment(data));
-      }
 
       
 
@@ -88,25 +69,56 @@ function AppointmentEditScreen() {
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ name: "", price: "", description: "", phoneType: null, appointmentDate: "", appointmentTime: "", images: [] }}
-                    onSubmit={handleSubmit}
+                    initialValues={{ name: "", price: "", description: "", phoneType: null, appointmentDate: "", appointmentTime: "", images: "" }}
+                    onSubmit={(values) => console.log('sub', values)}
                     validationSchema={validationSchema}
                 >
                     {({ errors, setFieldTouched, touched, values, handleChange, handleSubmit }) => (
                         <>
-                            <ImageInput imageUri={imageUri} onChangeImage={(uri) => setImageUri(uri)} />
-                            <Input maxLength={255} name="name" placeholder="Name" onBlur={() => setFieldTouched("name")} onChangeText={handleChange("name")} />
+                            <ImageInput 
+                                imageUri={imageUri} 
+                                onChangeImage={(uri) => handleChange("images")(uri)}
+                             />
+                            <Input 
+                                maxLength={255} 
+                                placeholder="Name" 
+                                onBlur={() => setFieldTouched("name")} 
+                                onChangeText={handleChange("name")} 
+                            />
                             <ErrorMessage error={errors.name} visible={touched.name} />
-                            <Input keyboardType="numeric" maxLength={8} name="price" placeholder="Price" onBlur={() => setFieldTouched("price")} onChangeText={handleChange("price")} />
+                            <Input 
+                                keyboardType="numeric" 
+                                maxLength={8} 
+                                placeholder="Price" 
+                                onBlur={() => setFieldTouched("price")} 
+                                onChangeText={handleChange("price")} 
+                            />
                             <ErrorMessage error={errors.price} visible={touched.price} />
-                            <AppFormPicker icon="apps" items={phoneTypes} name="phoneType" numberOfColumns={3} placeholder="Pick a Phone" PickerItemComponent={PhonePickerItem} />
+                            <AppFormPicker 
+                                icon="apps" 
+                                items={phoneTypes} 
+                                name="phoneType" 
+                                numberOfColumns={3} 
+                                placeholder="Pick a Phone" 
+                                PickerItemComponent={PhonePickerItem} 
+                            />
                             
-                            <Input maxLength={255} name="description" placeholder="Diagnostic Notes" onBlur={() => setFieldTouched("description")} onChangeText={handleChange("description")} />
+                            <Input 
+                                maxLength={255} 
+                                placeholder="Diagnostic Notes" 
+                                onBlur={() => setFieldTouched("description")} 
+                                onChangeText={handleChange("description")} 
+                            />
                             <AppText>Pick a Date:</AppText>
-                            <CustomDatePicker onDateChange={(date) => date.format('MMMM Do, YYYY')} />
+                            <CustomDatePicker 
+                                onDateChange={(date) => handleChange("appointmentDate")(date.format('MMMM Do, YYYY'))} />
                             <AppText>Pick a Time:</AppText>
-                            <CustomTimePicker onDateChange={(date) => date.format('LT')} />
-                            <CustomButton title="Create Appointment" onPress={handleSubmit} />
+                            <CustomTimePicker 
+                                onDateChange={(date) => handleChange("appointmentTime")(date.format('LT'))} />
+                            <CustomButton  
+                                title="Create Appointment" 
+                                onPress={handleSubmit} 
+                            />
                         </>
                     )}
                 </Formik>

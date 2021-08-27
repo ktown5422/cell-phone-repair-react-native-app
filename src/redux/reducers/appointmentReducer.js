@@ -3,7 +3,8 @@ import {
     GET_APPOINTMENTS,
     DELETE_APPOINTMENT,
     ADD_APPOINTMENT,
-    CREATE_APPOINTMENT
+    CREATE_APPOINTMENT,
+    SIGN_OUT
     } from '../actions/actionTypes';
 
 const initialState = {
@@ -29,6 +30,10 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 appointments: state.appointments.concat(newAppointment)
+            }
+            case SIGN_OUT:
+            return {
+               ...initialState
             }
         default:
             return state;

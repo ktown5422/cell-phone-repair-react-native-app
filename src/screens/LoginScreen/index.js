@@ -17,7 +17,6 @@ import { connect } from 'react-redux';
 import Proptypes from 'prop-types';
 import { signIn } from '../../redux/actions/authAction';
 import { useDispatch } from "react-redux";
-import { CommonActions } from "@react-navigation/native";
 
 const LoginScreen = ({loading, navigation }) => {
  
@@ -93,7 +92,7 @@ const LoginScreen = ({loading, navigation }) => {
             <Text style={styles.infoText}>Don't have an account?</Text>
             <TouchableOpacity
               onPress={() => {
-                navigate(REGISTER);
+                navigation.navigate(REGISTER);
               }}
             >
               <Text style={styles.linkBtn}>Register</Text>
@@ -110,4 +109,4 @@ const LoginScreen = ({loading, navigation }) => {
 //   isAuthenticated: state.auth.isAuthenticated
 // })
 
-export default connect(null)(LoginScreen);
+export default LoginScreen;
