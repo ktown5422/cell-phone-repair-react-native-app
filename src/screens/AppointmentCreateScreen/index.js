@@ -23,14 +23,6 @@ import AppText from '../../components/AppText';
 import CustomTimePicker from '../../components/CustomTimePicker';
 
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().required().min(1).label("Name"),
-    price: Yup.number().required().min(1).max(10000).label("Price"),
-    description: Yup.string().label("Diagnostic Notes"),
-    phoneType: Yup.object().required().nullable().label("Phone Type"),
-    images: Yup.array().min(1, "Please select at least one Image")
-});
-
 const phoneTypes = [
     { label: "iphone 5c", value: 1, backgroundColor: 'red', icon: 'cellphone' },
     { label: "iphone 6", value: 2, backgroundColor: 'green', icon: 'cellphone' },
@@ -63,22 +55,28 @@ const AppointmentEditScreen = () => {
     //   }
 
 
-      
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required().min(1).label("Name"),
+        price: Yup.number().required().min(1).max(10000).label("Price"),
+        description: Yup.string().label("Diagnostic Notes"),
+    });
 
     return (
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ name: "", price: "", description: "", phoneType: null, appointmentDate: "", appointmentTime: "", images: "" }}
-                    onSubmit={(values) => console.log('sub', values)}
+                    initialValues={{ imageUrl: "", name: "", price: "", description: "", phoneType: "", appointmentDate: "", appointmentTime: "" }}
+                    onSubmit={values => dispatch(createAppointment(values))}
                     validationSchema={validationSchema}
                 >
-                    {({ errors, setFieldTouched, touched, values, handleChange, handleSubmit }) => (
+                    {({ errors, setFieldTouched, touched, handleChange, handleSubmit }) => (
                         <>
-                            <ImageInput 
-                                imageUri={imageUri} 
-                                onChangeImage={(uri) => handleChange("images")(uri)}
-                             />
+                            <Input 
+                                maxLength={255} 
+                                placeholder="Set Image Url:" 
+                                onBlur={() => setFieldTouched("imageUrl")} 
+                                onChangeText={handleChange("imageUrl")} 
+                            />
                             <Input 
                                 maxLength={255} 
                                 placeholder="Name" 
@@ -99,7 +97,7 @@ const AppointmentEditScreen = () => {
                                 items={phoneTypes} 
                                 name="phoneType" 
                                 numberOfColumns={3} 
-                                placeholder="Pick a Phone" 
+                                placeholder="Pick a Phone"
                                 PickerItemComponent={PhonePickerItem} 
                             />
                             

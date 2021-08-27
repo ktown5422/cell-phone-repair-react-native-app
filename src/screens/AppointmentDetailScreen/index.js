@@ -13,7 +13,7 @@ function AppointmentDetailScreen({ route }) {
  
   return (
     <ScrollView>
-      <Image style={styles.image} source={appointments.image} />
+      <Image style={styles.image} source={{ uri: appointments.imageUrl }} />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{appointments.name}</AppText>
         <AppText style={styles.price}>{appointments.price}</AppText>

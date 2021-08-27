@@ -32,43 +32,38 @@ export const getAppointments = () => async (dispatch, getState) => {
     
 };
 
-export const createAppointment = ({ imageUri, name, price, description, phoneType, appointmentDate, appointmentTime }) => async (dispatch, getState) => {
+export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime }) => async (dispatch, getState) => {
   const userId = getState().auth.id;
 
-  console.log('newappointment', userId)
+  console.log('newappointment', imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime)
 
-  try {
     const response = await fetch(
       "http://localhost:3000/api/appointments/", 
       {
        method: 'POST',
        headers: {
-         'Content-Type': 'multipart/form-data'
+         'Content-Type': 'application/json'
        },
        body: JSON.stringify({
-         imageUri: imageUri,
+         imageUrl: imageUrl,
          name: name,
          price: price,
          description: description,
-         phoneType: phoneType,
+         phoneType: phoneType.label,
          appointmentDate: appointmentDate,
          appointmentTime: appointmentTime,
          creator: userId
        })
      }
    );
- 
+   const resData = await response.json();
+   console.log(resData);
+   
    if (!response.ok) {
      throw new Error('err')
    }
  
-   const resData = await response.json();
-   console.log(resData);
-   dispatch({ type: CREATE_APPOINTMENT, appointmentData: { name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
-
-  } catch (error) {
-    throw error;
-  }
+   dispatch({ type: CREATE_APPOINTMENT, resData: { imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
   
 };
 

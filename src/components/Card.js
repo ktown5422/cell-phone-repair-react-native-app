@@ -6,11 +6,11 @@ import AppText from "../components/AppText/index";
 import { Button } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 
-function Card({ title, subTitle, image, onPress, appointmentDate, appointmentTime, description, phoneType }) {
+function Card({ title, subTitle, uri: imageUrl, onPress, appointmentDate, appointmentTime, description, phoneType }) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
-        <Image style={styles.image} source={HatPic} />
+        <Image style={styles.image} source={{ uri: imageUrl}} />
         <View style={styles.detailsContainer}>
           <AppText style={styles.title}>{title}</AppText>
           <AppText style={styles.subTitle}>{subTitle}</AppText>

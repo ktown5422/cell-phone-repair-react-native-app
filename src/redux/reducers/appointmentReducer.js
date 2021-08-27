@@ -20,12 +20,14 @@ export default function(state = initialState, action) {
             };
         case CREATE_APPOINTMENT:
             const newAppointment = new Appointment (
+                action.appointmentData.imageUrl,
                 action.appointmentData.name,
                 action.appointmentData.price,
                 action.appointmentData.description,
                 action.appointmentData.phoneType,
                 action.appointmentData.appointmentDate,
                 action.appointmentData.appointmentTime,
+                action.appointmentData.creator,
             );
             return {
                 ...state,

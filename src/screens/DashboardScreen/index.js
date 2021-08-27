@@ -103,7 +103,7 @@ const Dashboard = ({ navigation }) => {
               <Card
                 title={item.name}
                 subTitle={"$" + item.price}
-                image={HatPic}
+                uri={item.imageUrl}
                 onPress={() => navigation.navigate(APPOINTMENT_DETAILS, item)} />
             }
             refreshing={refreshing}
