@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import colors from '../assets/theme/colors';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -8,7 +8,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
 import { useEffect } from 'react';
 
-function ImageInput({ imageUri, onChangeImage, ...props }) {
+function ImageInput({ profileImage, setProfileImage  }) {
+    
+
+
     useEffect(() => {
         requestPermission();
     }, []);
@@ -22,9 +25,9 @@ function ImageInput({ imageUri, onChangeImage, ...props }) {
 
 
     const handlePress = () => {
-        if (!imageUri) selectImage();
+        if (!profileImage) selectImage();
         else Alert.alert('Delete', 'Are you sure you want to delete this image', [
-            { text: 'Yes', onPress: () => onChangeImage(null) },
+            { text: 'Yes', onPress: () => setProfileImage(null) },
             { text: 'No' },
         ])
     }
@@ -32,12 +35,13 @@ function ImageInput({ imageUri, onChangeImage, ...props }) {
     const selectImage = async () => {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
-                // base64: true,   
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
                 quality: 0.5
             });
             if (!result.cancelled)
-                onChangeImage(result.uri);
+                setProfileImage(result.uri);
+                
                 
         } catch (error) {
             console.log('Error reading an image', error);
@@ -48,8 +52,8 @@ function ImageInput({ imageUri, onChangeImage, ...props }) {
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
             <View style={styles.container}>
-                {!imageUri && <MaterialCommunityIcons color={colors.medium} name="camera" size={40} />}
-                {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+                {!profileImage && <MaterialCommunityIcons color={colors.medium} name="camera" size={40} />}
+                {profileImage && <Image source={{ uri: profileImage }} style={styles.image} />}
             </View>
         </TouchableWithoutFeedback>
     );

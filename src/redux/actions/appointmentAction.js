@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { TabActions } from '@react-navigation/native';
-import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT} from './actionTypes';
+import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT, EDIT_APPOINTMENT} from './actionTypes';
 
 
 export const getAppointments = () => async (dispatch, getState) => {
@@ -33,11 +32,12 @@ export const getAppointments = () => async (dispatch, getState) => {
     
 };
 
-export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime }) => async (dispatch, getState, navigation) => {
+export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, onSuccess = () => {} }) => async (dispatch, getState) => {
   const userId = getState().auth.id;
 
-  // console.log('newappointment', imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime)
+  console.log('here', imageUrl)
 
+  
     const response = await fetch(
       "http://localhost:3000/api/appointments/", 
       {
@@ -64,11 +64,40 @@ export const createAppointment = ({ imageUrl, name, price, description, phoneTyp
      throw new Error('err')
    }
  
-   dispatch({ type: CREATE_APPOINTMENT, responseData: { imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
-
-  const jumpToAction = TabActions.jumpTo('AppointmentNavigator');
-
-  navigation.dispatch(jumpToAction);  
+   dispatch({ type: CREATE_APPOINTMENT, appointmentData: { imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, creator: userId } });
+   onSuccess();
 };
+
+export const updateAppointment = ({ id, price, description, phoneType, appointmentDate, appointmentTime, onSuccess = () => {}  }) => async (dispatch, getState) => {
+  
+  // const id = getState().appointments.appointments.find(appoint => appoint['id'])
+  // const  id  = route.params;
+  console.log('nnn', id, price)
+
+  const response = await fetch(
+    `http://localhost:3000/api/appointments/${id}`, 
+    {
+     method: 'PATCH',
+     headers: {
+       'Content-Type': 'application/json'
+     },
+     body: JSON.stringify({
+       price: price,
+       description: description,
+       phoneType: phoneType.label,
+       appointmentDate: appointmentDate,
+       appointmentTime: appointmentTime,
+     })
+   }
+ );
+ const resData = await response.json();
+ console.log(resData);
+ 
+ if (!response.ok) {
+   throw new Error('err')
+ }
+
+ dispatch({ type: EDIT_APPOINTMENT, aid: id, appointmentData: { price, description, phoneType, appointmentDate, appointmentTime } });
+}
 
 // export const deleteAppointment

@@ -1,18 +1,19 @@
 import React from 'react';
-import Screen from '../../components/Screen';
+import Screen from './Screen';
 import { Formik } from "formik";
-import Input from '../../components/Input';
-import CustomButton from '../../components/CustomButton';
+import Input from './Input/index';
+import CustomButton from './CustomButton/index';
 import * as Yup from 'yup';
-import ErrorMessage from '../../components/ErrorMessage';
-import PhonePickerItem from '../../components/PhonePickerItem';
+import ErrorMessage from './ErrorMessage';
+import PhonePickerItem from './PhonePickerItem';
 import { ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { createAppointment } from '../../redux/actions/appointmentAction';
-import AppFormPicker from '../../components/AppFormPicker';
-import CustomDatePicker from '../../components/CustomDatePicker';
-import AppText from '../../components/AppText';
-import CustomTimePicker from '../../components/CustomTimePicker';
+import { updateAppointment } from '../redux/actions/appointmentAction';
+import AppFormPicker from './AppFormPicker';
+import CustomDatePicker from './CustomDatePicker';
+import AppText from './AppText/index';
+import CustomTimePicker from './CustomTimePicker';
+import { useSelector } from 'react-redux';
 
 
 
@@ -32,39 +33,29 @@ const phoneTypes = [
 ];
 
 
-const AppointmentEditScreen = () => {
+function EditAppointmentScreen({ route }) {
     const dispatch = useDispatch();
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required().min(1).label("Name"),
         price: Yup.number().required().min(1).max(10000).label("Price"),
         description: Yup.string().label("Diagnostic Notes"),
     });
+    // const appointments = useSelector(state => state.appointments.appointments.find(appoint => appoint.id === id));
+    const  id  = route.params;
+    // const appointmentId = useSelector(state => state.appointments.appointments.find(appoint => appoint.id === id));
+
+    // console.log('yolo', appointmentId)
 
     return (
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ imageUrl: "", name: "", price: "", description: "", phoneType: "", appointmentDate: "", appointmentTime: "" }}
-                    onSubmit={values => dispatch(createAppointment(values))}
+                    initialValues={{ id: id, price: "", description: "", phoneType: "", appointmentDate: "", appointmentTime: "" }}
+                    onSubmit={values => dispatch(updateAppointment(values, id))}
                     validationSchema={validationSchema}
                 >
                     {({ errors, setFieldTouched, touched, handleChange, handleSubmit }) => (
                         <>
-                            <Input 
-                                maxLength={255} 
-                                placeholder="Paste Image Url:" 
-                                onBlur={() => setFieldTouched("imageUrl")} 
-                                onChangeText={handleChange("imageUrl")} 
-                            />
-                            {/* <ImageInput setProfileImage={(uri) => handleChange("imageUrl")(uri)}  /> */}
-                            <Input 
-                                maxLength={255} 
-                                placeholder="Name" 
-                                onBlur={() => setFieldTouched("name")} 
-                                onChangeText={handleChange("name")} 
-                            />
-                            <ErrorMessage error={errors.name} visible={touched.name} />
                             <Input 
                                 keyboardType="numeric" 
                                 maxLength={8} 
@@ -106,4 +97,4 @@ const AppointmentEditScreen = () => {
     );
 }
 
-export default AppointmentEditScreen;
+export default EditAppointmentScreen;

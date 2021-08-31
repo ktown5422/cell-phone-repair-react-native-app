@@ -1,6 +1,7 @@
 export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
 export const CREATE_APPOINTMENT = "CREATE_APPOINTMENT";
 export const DELETE_APPOINTMENT = "DELETE_APPOINTMENT";
+export const EDIT_APPOINTMENT = "EDIT_APPOINTMENT";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const SIGN_UP = "SIGN_UP";

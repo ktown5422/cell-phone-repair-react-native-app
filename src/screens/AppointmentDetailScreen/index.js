@@ -6,12 +6,16 @@ import AppText from "../../components/AppText/index";
 import ListItem from "../../components/ListItem";
 import { useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";
+import EditAppointmentScreen from "../../components/EditAppointmentScreen";
+import { APPOINTMENT_EDIT } from "../../constants/routeNames";
 
-function AppointmentDetailScreen({ route }) {
+function AppointmentDetailScreen({ route, navigation }) {
   const appointments = route.params;
   const firstName = useSelector(state => state.auth.first_name);
   const email = useSelector(state => state.auth.email);
- 
+  const id = route.params.id;
+  
+
   return (
     <ScrollView>
       <Image style={styles.image} source={{ uri: appointments.imageUrl }} />
@@ -24,7 +28,7 @@ function AppointmentDetailScreen({ route }) {
         <AppText style={styles.price}>{appointments.appointmentTime}</AppText>
       </View>
       <View>
-        <CustomButton title="Edit" />
+        <CustomButton title="Edit" onPress={() => navigation.navigate(APPOINTMENT_EDIT, id)} />
         <CustomButton title="delete" />
       </View>
         <View style={styles.userContainer}>

@@ -21,4 +21,5 @@ export const MENU = "Menu";
 export const MENU_SCREEN = "Menu";
 export const MESSAGES = "Messages";
 export const SIGN_OUT = "Sign Out";
+export const APPOINTMENT_EDIT = "Appointment Edit";
 

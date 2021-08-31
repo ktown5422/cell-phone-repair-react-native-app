@@ -25,6 +25,7 @@ const Dashboard = ({ navigation }) => {
  
 
   const appointments = useSelector(state => state.appointments.appointments);
+  
   const loadAppointments = useCallback( () => {
     console.log('dashboard load')
     setIsLoading(true);

@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
                 ...state,
                 appointments: state.appointments.concat(newAppointment)
             }
-            case SIGN_OUT:
+        case SIGN_OUT:
             return {
                ...initialState
             }
