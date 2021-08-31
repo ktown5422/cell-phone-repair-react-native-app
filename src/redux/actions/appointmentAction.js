@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT, EDIT_APPOINTMENT} from './actionTypes';
+import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT, EDIT_APPOINTMENT, DELETE_APPOINTMENT} from './actionTypes';
 
 
 export const getAppointments = () => async (dispatch, getState) => {
@@ -100,4 +100,17 @@ export const updateAppointment = ({ id, price, description, phoneType, appointme
  dispatch({ type: EDIT_APPOINTMENT, aid: id, appointmentData: { price, description, phoneType, appointmentDate, appointmentTime } });
 }
 
-// export const deleteAppointment
+export const deleteAppointment = (id) => async (dispatch, getState) => {
+console.log('id', id)
+  const response = await fetch(
+    `http://localhost:3000/api/appointments/${id}`,
+    {
+      method: 'DELETE',
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Something went wrong!');
+  }
+  dispatch({ type: DELETE_APPOINTMENT, aid: id });
+}
