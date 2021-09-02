@@ -98,7 +98,7 @@ const Stack = createStackNavigator();
 
 function HomeNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
       <Stack.Screen name={DASHBOARD} component={Dashboard} />
       <Stack.Screen
         name={APPOINTMENT_LIST}

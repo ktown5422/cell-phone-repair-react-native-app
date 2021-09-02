@@ -5,6 +5,9 @@ import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT, EDIT_APPOINTMEN
 
 export const getAppointments = () => async (dispatch, getState) => {
     const userId = getState().auth.id;
+
+    // const state = getState();
+    // console.log('state', state)
     
     try {
       const response = await fetch(
@@ -34,9 +37,6 @@ export const getAppointments = () => async (dispatch, getState) => {
 
 export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, onSuccess = () => {} }) => async (dispatch, getState) => {
   const userId = getState().auth.id;
-
-  console.log('here', imageUrl)
-
   
     const response = await fetch(
       "http://localhost:3000/api/appointments/", 
@@ -72,7 +72,6 @@ export const updateAppointment = ({ id, price, description, phoneType, appointme
   
   // const id = getState().appointments.appointments.find(appoint => appoint['id'])
   // const  id  = route.params;
-  console.log('nnn', id, price)
 
   const response = await fetch(
     `http://localhost:3000/api/appointments/${id}`, 
@@ -101,7 +100,6 @@ export const updateAppointment = ({ id, price, description, phoneType, appointme
 }
 
 export const deleteAppointment = (id) => async (dispatch, getState) => {
-console.log('id', id)
   const response = await fetch(
     `http://localhost:3000/api/appointments/${id}`,
     {

@@ -41,7 +41,7 @@ const InventoryScreen = () => {
   const [inventory, setInventory] = useState(phoneInventory);
   const [refreshing, setRefreshing] = useState(false);
 
-  const handleDelete = (inventory) => {
+  const handleDelete = (inventorys) => {
     const newInventory = inventory.filter((i) => i.id !== inventorys.id);
     setInventory(newInventory);
   };
@@ -61,7 +61,7 @@ const InventoryScreen = () => {
     <Screen>
       <FlatList
         data={inventory}
-        keyExtractor={(inventory) => inventory.id.toString()}
+        keyExtractor={(inventorys) => inventorys.id.toString()}
         renderItem={renderItem}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}

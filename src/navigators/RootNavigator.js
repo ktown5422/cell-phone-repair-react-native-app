@@ -11,7 +11,8 @@ import {
     INVENTORY_LIST,
     INVOICE_LIST,
     CREATE_APPOINTMENT,
-    APPOINTMENTS, 
+    APPOINTMENTS,
+    INVENTORY, 
 } from "../constants/routeNames";
 import { NavigationContainer } from "@react-navigation/native";
 import InventoryScreen from "../screens/InventoryScreen";
@@ -20,6 +21,7 @@ import InvoiceListScreen from "../screens/InvoiceListScreen";
 import AppointmentNavigator from "./AppointmentNavigator";
 import AppointmentCreateScreen from "../screens/AppointmentCreateScreen";
 import { useSelector } from "react-redux";
+import InventoryNavigator from "./InventoryNavigator";
 
 
 
@@ -51,8 +53,8 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name={INVENTORY_LIST}
-        component={InventoryScreen}
+        name={INVENTORY}
+        component={InventoryNavigator}
         options={{
           tabBarLabel: "Inventory",
           tabBarIcon: ({ color }) => (
@@ -101,17 +103,8 @@ const TabNavigator = () => {
 
 const RootNavigator = ({ navigation }) => {
  
-
     const getToken = useSelector(state => !!state.auth.token);
-    // const getToken = () => store.getState().auth.token;
- 
-    // console.log(getToken())
-
-    // useEffect(() => {
-    //     getToken();
-    // }, [getToken]);
-
-
+    
     return (
         <NavigationContainer>
             {getToken ? <TabNavigator /> : <AuthNavigator />}

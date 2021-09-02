@@ -7,11 +7,12 @@ import colors from "../../assets/theme/colors";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "../../components/Icon";
 import ListItemSeparator from "../../components/ListItemSeparator";
-import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS } from "../../constants/routeNames";
+import { USER_PROFILE, MESSAGES, INVOICE_LIST, INVENTORY_LIST, SETTINGS, CREATE_INVENTORY_ITEM } from "../../constants/routeNames";
 import { useDispatch } from "react-redux";
 import { SIGN_OUT } from "../../redux/actions/actionTypes";
 import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ListItemPic from "../../components/ListItemPic";
 
 
 
@@ -26,14 +27,14 @@ const menuItems = [
     },
     targetScreen: USER_PROFILE
   },
-  {
-    title: "Messages",
-    icon: {
-      name: "calendar-month",
-      backgroundColor: colors.danger,
-    },
-    targetScreen: MESSAGES
-  },
+  // {
+  //   title: "Messages",
+  //   icon: {
+  //     name: "calendar-month",
+  //     backgroundColor: colors.danger,
+  //   },
+  //   targetScreen: MESSAGES
+  // },
   {
     title: "Create Invoice",
     icon: {
@@ -48,7 +49,7 @@ const menuItems = [
       name: "playlist-plus",
       backgroundColor: colors.secondary,
     },
-    targetScreen: INVENTORY_LIST
+    targetScreen: CREATE_INVENTORY_ITEM
   },
   {
     title: "Settings",
@@ -65,14 +66,15 @@ const menuItems = [
 function MenuScreen({ navigation }) {
   const firstName = useSelector(state => state.auth.first_name);
   const email = useSelector(state => state.auth.email);
+  const profile_img = useSelector(state => state.auth.profile_img);
   const dispatch = useDispatch();
   return (
     <Screen>
       <View style={styles.container}>
-        <ListItem
+        <ListItemPic
           title={firstName}
           subTitle={email}
-          image={require("../../assets/images/HatPic.jpg")}
+          uri={profile_img}
         />
       </View>
       <View style={styles.container}>

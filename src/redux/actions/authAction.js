@@ -31,13 +31,13 @@ export const signIn = ({email, password}) => async dispatch => {
     
     console.log(resData);
     
-    dispatch({ type: SIGN_IN, payload: {id: resData.id, token: resData.token, first_name: resData.first_name, email: resData.email }});
+    dispatch({ type: SIGN_IN, payload: {id: resData.id, token: resData.token, first_name: resData.first_name, email: resData.email, profile_img: resData.profile_img }});
   } catch (err) {
     console.log(err);
   }
 };
 
-export const signUp = ({first_name, last_name, email, password}) => async dispatch => {
+export const signUp = ({ profile_img, first_name, last_name, email, password}) => async dispatch => {
   console.log('signup')
   try {
       const response = await fetch("http://localhost:3000/api/users/register", {
@@ -50,6 +50,7 @@ export const signUp = ({first_name, last_name, email, password}) => async dispat
           last_name: last_name,
           email: email,
           password: password,
+          profile_img: profile_img,
         }),
       });
 

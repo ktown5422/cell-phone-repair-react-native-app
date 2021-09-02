@@ -40,7 +40,7 @@ const RegisterScreen = ({loading}) => {
         
         <View style={styles.form}>
         <Formik
-            initialValues={{ first_name: "", last_name: "", email: "", password: "" }}
+            initialValues={{ profile_img: "", first_name: "", last_name: "", email: "", password: "" }}
             onSubmit={(values) => dispatch(signUp(values))}
             validationSchema={validationSchema}
         >
@@ -81,6 +81,12 @@ const RegisterScreen = ({loading}) => {
                 autoCapitalize="none"
                 onBlur={() => setFieldTouched("password")}
                 onChangeText={handleChange("password")}
+              />
+              <Input 
+                maxLength={255} 
+                placeholder="Paste Profile Image Url:" 
+                onBlur={() => setFieldTouched("profile_img")} 
+                onChangeText={handleChange("profile_img")} 
               />
               <ErrorMessage error={errors.password} visible={touched.password} />
               <CustomButton
