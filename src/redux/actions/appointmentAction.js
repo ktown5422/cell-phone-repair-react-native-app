@@ -6,8 +6,8 @@ import { GET_APPOINTMENTS, ADD_APPOINTMENTS, CREATE_APPOINTMENT, EDIT_APPOINTMEN
 export const getAppointments = () => async (dispatch, getState) => {
     const userId = getState().auth.id;
 
-    // const state = getState();
-    // console.log('state', state)
+    const token = getState().auth.token;
+    // console.log('state', token)
     
     try {
       const response = await fetch(
@@ -15,7 +15,8 @@ export const getAppointments = () => async (dispatch, getState) => {
         {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
           },
         }
       );
@@ -37,13 +38,15 @@ export const getAppointments = () => async (dispatch, getState) => {
 
 export const createAppointment = ({ imageUrl, name, price, description, phoneType, appointmentDate, appointmentTime, onSuccess = () => {} }) => async (dispatch, getState) => {
   const userId = getState().auth.id;
+  const token = getState().auth.token;
   
     const response = await fetch(
       "http://localhost:3000/api/appointments/", 
       {
        method: 'POST',
        headers: {
-         'Content-Type': 'application/json'
+         'Content-Type': 'application/json',
+         'Authorization': 'Bearer ' + token
        },
        body: JSON.stringify({
          imageUrl: imageUrl,
@@ -69,7 +72,7 @@ export const createAppointment = ({ imageUrl, name, price, description, phoneTyp
 };
 
 export const updateAppointment = ({ id, price, description, phoneType, appointmentDate, appointmentTime, onSuccess = () => {}  }) => async (dispatch, getState) => {
-  
+  const token = getState().auth.token;
   // const id = getState().appointments.appointments.find(appoint => appoint['id'])
   // const  id  = route.params;
 
@@ -78,7 +81,9 @@ export const updateAppointment = ({ id, price, description, phoneType, appointme
     {
      method: 'PATCH',
      headers: {
-       'Content-Type': 'application/json'
+       'Content-Type': 'application/json',
+       'Authorization': 'Bearer ' + token
+
      },
      body: JSON.stringify({
        price: price,
@@ -100,10 +105,15 @@ export const updateAppointment = ({ id, price, description, phoneType, appointme
 }
 
 export const deleteAppointment = (id) => async (dispatch, getState) => {
+  const token = getState().auth.token;
+
   const response = await fetch(
     `http://localhost:3000/api/appointments/${id}`,
     {
       method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + token
+    }
     }
   );
 

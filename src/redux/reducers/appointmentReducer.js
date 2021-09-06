@@ -10,6 +10,7 @@ import {
 
 const initialState = {
     appointments: [],
+    token: null,
 }
 
 export default function(state = initialState, action) {
@@ -17,7 +18,7 @@ export default function(state = initialState, action) {
         case GET_APPOINTMENTS:
             return {
                 ...state,
-                appointments: action.payload
+                appointments: action.payload,
             };
         case CREATE_APPOINTMENT:
             const newAppointment = new Appointment (

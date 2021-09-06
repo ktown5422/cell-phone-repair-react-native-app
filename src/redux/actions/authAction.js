@@ -4,15 +4,14 @@ import { LOGIN } from '../../constants/routeNames';
 import { SIGN_IN, SIGN_OUT, SIGN_UP } from './actionTypes';
 
 
-export const signIn = ({email, password}) => async dispatch => {
-    console.log('here')
+export const signIn = ({email, password}) => async (dispatch, getState) => {
     try {
         const response = await fetch(
           'http://localhost:3000/api/users/login',
           {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               email: email,

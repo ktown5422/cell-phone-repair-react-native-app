@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { createAppointment } from '../../redux/actions/appointmentAction';
 import AppFormPicker from '../../components/AppFormPicker';
+import { createInventoryItem } from '../../redux/actions/inventoryAction';
 
 
 
@@ -33,7 +34,6 @@ const createInventoryScreen = () => {
     const dispatch = useDispatch();
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required().min(1).label("Name"),
         price: Yup.number().required().min(1).max(10000).label("Price"),
     });
 
@@ -41,8 +41,8 @@ const createInventoryScreen = () => {
         <Screen>
             <ScrollView>
                 <Formik
-                    initialValues={{ imageUrl: "", name: "", price: "", quantity: "" }}
-                    onSubmit={values => dispatch(createAppointment(values))}
+                    initialValues={{ imageUrl: "", phoneType: "", price: "", quantity: "" }}
+                    onSubmit={values => dispatch(createInventoryItem(values))}
                     validationSchema={validationSchema}
                 >
                     {({ errors, setFieldTouched, touched, handleChange, handleSubmit }) => (
@@ -66,7 +66,7 @@ const createInventoryScreen = () => {
                             <AppFormPicker 
                                 icon="apps" 
                                 items={phoneTypes} 
-                                name="name" 
+                                name="phoneType" 
                                 numberOfColumns={3} 
                                 placeholder="Pick a Phone Screen"
                                 PickerItemComponent={PhonePickerItem} 

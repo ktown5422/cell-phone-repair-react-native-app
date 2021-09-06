@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
         case CREATE_INVENTORY_ITEM:
             const newInventoryItem = new Inventory (
                 action.inventoryData.imageUrl,
-                action.inventoryData.name,
+                action.inventoryData.phoneType,
                 action.inventoryData.price,
                 action.inventoryData.quantity,
                 action.inventoryData.creator,

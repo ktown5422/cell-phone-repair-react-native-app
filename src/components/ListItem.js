@@ -8,7 +8,8 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 function ListItem({
   title,
   subTitle,
-  image,
+  quantity,
+  uri: imageUrl,
   ImageComponent,
   renderRightActions,
   onPress,
@@ -18,9 +19,10 @@ function ListItem({
       <TouchableHighlight underlayColor={colors.darkgrey} onPress={onPress}>
         <View style={styles.container}>
           {ImageComponent}
-          {image && <Image style={styles.image} source={image} />}
+          {imageUrl && <Image style={styles.image} source={{uri: imageUrl}} />}
           <View style={styles.detailsContainer}>
             <AppText style={styles.title}>{title}</AppText>
+            <AppText style={styles.subTitle}>{quantity}</AppText>
             {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
           </View>
         </View>
